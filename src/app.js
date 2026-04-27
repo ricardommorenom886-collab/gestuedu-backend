@@ -1,27 +1,51 @@
 const express = require("express");
 const cors = require("cors");
-const path = require("path");
 
 const app = express();
 
-// middlewares
+// ===============================
+// 🔹 MIDDLEWARES
+// ===============================
 app.use(cors());
 app.use(express.json());
 
-// 🔥 prueba básica (para confirmar que el servidor responde)
+// ===============================
+// 🔹 RUTAS
+// ===============================
+const estudiantesRoutes = require("./routes/estudiantes.routes");
+const notasRoutes = require("./routes/notas.routes");
+const authRoutes = require("./routes/auth.routes"); // 👈 NUEVO
+
+// ===============================
+// 🔹 USO DE RUTAS
+// ===============================
+app.use("/api/estudiantes", estudiantesRoutes);
+app.use("/api/notas", notasRoutes);
+app.use("/api/auth", authRoutes); // 👈 NUEVO
+
+// ===============================
+// 🔹 RUTAS DE PRUEBA
+// ===============================
 app.get("/", (req, res) => {
-  res.send("Servidor funcionando");
+  res.send("Servidor funcionando correctamente 🚀");
 });
 
 app.post("/test", (req, res) => {
-  res.send("Funciona POST");
+  res.send("POST funcionando correctamente 🚀");
 });
 
-// 🔥 cargar rutas correctamente (sin errores de ruta)
-const estudiantesRoutes = require(path.join(__dirname, "routes/estudiantes.routes"));
-app.use("/api", estudiantesRoutes);
+// ===============================
+// 🔹 MANEJO DE ERRORES (IMPORTANTE)
+// ===============================
+app.use((req, res) => {
+  res.status(404).json({ error: "Ruta no encontrada" });
+});
 
-// 🚀 iniciar servidor (SIEMPRE AL FINAL)
-app.listen(3000, () => {
-  console.log("Servidor corriendo en puerto 3000");
+// ===============================
+// 🚀 INICIAR SERVIDOR
+// ===============================
+const PORT = 3000;
+
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
