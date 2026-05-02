@@ -2,21 +2,34 @@ const jwt = require("jsonwebtoken");
 
 const SECRET = "clave_secreta";
 
-exports.verifyToken = (req, res, next) => {
-  const token = req.headers["authorization"];
+const verifyToken = (req, res, next) => {
+  const authHeader = req.headers["authorization"];
 
-  if (!token) {
-    return res.status(403).json({ error: "Token requerido" });
+  if (!authHeader) {
+    return res.status(401).json({
+      error: "Token requerido"
+    });
   }
 
-  const tokenLimpio = token.split(" ")[1];
+  const token = authHeader.split(" ")[1];
 
-  jwt.verify(tokenLimpio, SECRET, (err, decoded) => {
-    if (err) {
-      return res.status(401).json({ error: "Token inválido" });
-    }
+  if (!token) {
+    return res.status(401).json({
+      error: "Token inválido"
+    });
+  }
 
-    req.userId = decoded.id;
+  try {
+    const decoded = jwt.verify(token, SECRET);
+
+    req.user = decoded;
+
     next();
-  });
+  } catch (error) {
+    return res.status(401).json({
+      error: "Token inválido"
+    });
+  }
 };
+
+module.exports = verifyToken;

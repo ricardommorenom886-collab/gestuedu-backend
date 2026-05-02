@@ -2,17 +2,11 @@ const express = require("express");
 const router = express.Router();
 
 const controller = require("../controllers/notas.controller");
-const { verifyToken } = require("../middlewares/auth.middleware"); // 👈 IMPORTANTE
+const verifyToken = require("../middlewares/auth.middleware");
 
-// ===============================
-// 🔐 RUTAS PROTEGIDAS CON AUTH
-// ===============================
+// CRUD
 router.post("/", verifyToken, controller.createNota);
 router.get("/", verifyToken, controller.getNotas);
-
-// ===============================
-// 🔹 OTRAS RUTAS (también puedes protegerlas si quieres)
-// ===============================
 router.get("/:id", verifyToken, controller.getNotaById);
 router.put("/:id", verifyToken, controller.updateNota);
 router.delete("/:id", verifyToken, controller.deleteNota);
