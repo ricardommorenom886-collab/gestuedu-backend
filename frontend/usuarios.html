@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Usuarios - GESTUEDU</title>
+<link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header>
+  <img src="logo.png" height="40">
+  <nav>
+    <a href="index.html" class="btn-azul">Inicio</a>
+    <a href="modulos.html" class="btn-azul">Módulos</a>
+    <a href="cursos.html" class="btn-azul">Cursos</a>
+    <a href="estudiantes.html" class="btn-azul">Estudiantes</a>
+    <a href="notas.html" class="btn-azul">Notas</a>
+  </nav>
+  <button onclick="logout()" class="btn-azul">Cerrar Sesión</button>
+</header>
+
+<div class="container">
+  <h2>Gestión de Usuarios</h2>
+
+  <div class="medidor">
+    <h3>Crear Usuario</h3>
+    <input type="text" id="nombre" placeholder="Nombre">
+    <input type="text" id="dni" placeholder="DNI">
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Contraseña">
+    <select id="rol">
+      <option value="admin">admin</option>
+      <option value="profesor">profesor</option>
+      <option value="estudiante">estudiante</option>
+    </select>
+    <button onclick="crearUsuario()">Crear</button>
+  </div>
+
+  <table border="1" width="100%">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>DNI</th>
+        <th>Email</th>
+        <th>Rol</th>
+        <th>Nueva clave</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody id="tabla"></tbody>
+  </table>
+</div>
+
+<script>
+const API = "http://localhost:3000/api/usuarios";
+const token = localStorage.getItem("token");
+
+if (!token) {
+  window.location.href = "login.html";
+}
+
+async function cargar() {
+  const res = await fetch(API, {
+    headers: {
+      "Authorization": "Bearer " + token
+    }
+  });
+
+  const data = await res.json();
+  const tabla = document.getElementById("tabla");
+  tabla.innerHTML = "";
+
+  data.forEach(u => {
+    tabla.innerHTML += `
+      <tr>
+        <td><input value="${u.nombre}" id="n${u.id}"></td>
+        <td><input value="${u.dni || ""}" id="d${u.id}"></td>
+        <td><input value="${u.email}" id="e${u.id}"></td>
+        <td>
+          <select id="r${u.id}">
+            <option value="admin" ${u.rol == "admin" ? "selected" : ""}>admin</option>
+            <option value="profesor" ${u.rol == "profesor" ? "selected" : ""}>profesor</option>
+            <option value="estudiante" ${u.rol == "estudiante" ? "selected" : ""}>estudiante</option>
+          </select>
+        </td>
+        <td><input type="password" id="p${u.id}" placeholder="Opcional"></td>
+        <td>
+          <button onclick="editar(${u.id})">Editar</button>
+          <button onclick="eliminar(${u.id})">Eliminar</button>
+        </td>
+      </tr>
+    `;
+  });
+}
+
+async function crearUsuario() {
+  const data = {
+    nombre: document.getElementById("nombre").value,
+    dni: document.getElementById("dni").value,
+    email: document.getElementById("email").value,
+    password: document.getElementById("password").value,
+    rol: document.getElementById("rol").value
+  };
+
+  const res = await fetch(API, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + token
+    },
+    body: JSON.stringify(data)
+  });
+
+  const result = await res.json();
+
+  if (res.ok) {
+    alert("Usuario creado");
+    document.getElementById("nombre").value = "";
+    document.getElementById("dni").value = "";
+    document.getElementById("email").value = "";
+    document.getElementById("password").value = "";
+    cargar();
+  } else {
+    alert(result.error);
+  }
+}
+
+async function editar(id) {
+  const data = {
+    nombre: document.getElementById("n" + id).value,
+    dni: document.getElementById("d" + id).value,
+    email: document.getElementById("e" + id).value,
+    rol: document.getElementById("r" + id).value,
+    password: document.getElementById("p" + id).value
+  };
+
+  const res = await fetch(API + "/" + id, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + token
+    },
+    body: JSON.stringify(data)
+  });
+
+  const result = await res.json();
+
+  if (res.ok) {
+    alert("Usuario actualizado");
+    cargar();
+  } else {
+    alert(result.error);
+  }
+}
+
+async function eliminar(id) {
+  if (!confirm("¿Eliminar usuario?")) return;
+
+  const res = await fetch(API + "/" + id, {
+    method: "DELETE",
+    headers: {
+      "Authorization": "Bearer " + token
+    }
+  });
+
+  const result = await res.json();
+
+  if (res.ok) {
+    alert("Usuario eliminado");
+    cargar();
+  } else {
+    alert(result.error);
+  }
+}
+
+function logout() {
+  localStorage.removeItem("token");
+  window.location.href = "login.html";
+}
+
+cargar();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Panel Estudiantes - GESTUEDU</title>
+<link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header>
+    <img src="logo.png" height="40">
+
+    <nav>
+        <a href="index.html" class="btn-azul">Inicio</a>
+        <a href="modulos.html" class="btn-azul">Módulos</a>
+        <a href="conocenos.html" class="btn-azul">Conócenos</a>
+        <a href="contacto.html" class="btn-azul">Contacto</a>
+    </nav>
+
+    <button onclick="logout()" class="btn-azul">Cerrar Sesión</button>
+</header>
+
+<div class="container">
+
+<h2>Gestión de Estudiantes</h2>
+
+<!-- 🔥 CREAR -->
+<div class="medidor">
+    <h3>Crear Estudiante</h3>
+
+    <input type="text" id="nombre" placeholder="Nombre">
+    <input type="text" id="documento" placeholder="Documento">
+    <input type="email" id="correo" placeholder="Correo">
+    <input type="number" id="edad" placeholder="Edad">
+
+    <button onclick="crearEstudiante()">Crear</button>
+</div>
+
+<hr>
+
+<!-- 🔥 TABLA -->
+<table border="1" width="100%">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Documento</th>
+            <th>Correo</th>
+            <th>Edad</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+
+    <tbody id="tabla"></tbody>
+</table>
+
+</div>
+
+<script>
+const API = "http://localhost:3000/api/estudiantes";
+const token = localStorage.getItem("token");
+
+// 🔒 PROTEGER
+if (!token) {
+    window.location.href = "login.html";
+}
+
+// ======================
+// LISTAR
+// ======================
+async function cargar() {
+    const res = await fetch(API, {
+        headers: {
+            "Authorization": "Bearer " + token
+        }
+    });
+
+    const data = await res.json();
+    const tabla = document.getElementById("tabla");
+
+    tabla.innerHTML = "";
+
+    data.forEach(e => {
+        tabla.innerHTML += `
+            <tr>
+                <td><input value="${e.nombre}" id="n${e.id}"></td>
+                <td><input value="${e.documento}" id="d${e.id}"></td>
+                <td><input value="${e.correo}" id="c${e.id}"></td>
+                <td><input value="${e.edad}" id="e${e.id}"></td>
+
+                <td>
+                    <button onclick="editar(${e.id})">✏️</button>
+                    <button onclick="eliminar(${e.id})">❌</button>
+                </td>
+            </tr>
+        `;
+    });
+}
+
+
+// ======================
+// CREAR
+// ======================
+async function crearEstudiante() {
+
+    const data = {
+        nombre: document.getElementById("nombre").value,
+        documento: document.getElementById("documento").value,
+        correo: document.getElementById("correo").value,
+        edad: document.getElementById("edad").value
+    };
+
+    const res = await fetch(API, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + token
+        },
+        body: JSON.stringify(data)
+    });
+
+    const result = await res.json();
+
+    if (res.ok) {
+        alert("Estudiante creado");
+        limpiarFormulario();
+        cargar();
+    } else {
+        alert(result.error);
+    }
+}
+
+// ======================
+// EDITAR
+// ======================
+async function editar(id) {
+
+    const data = {
+        nombre: document.getElementById("n"+id).value,
+        documento: document.getElementById("d"+id).value,
+        correo: document.getElementById("c"+id).value,
+        edad: document.getElementById("e"+id).value
+    };
+
+    const res = await fetch(API + "/" + id, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + token
+        },
+        body: JSON.stringify(data)
+    });
+
+    const result = await res.json();
+
+    if (res.ok) {
+        alert("Actualizado correctamente");
+        cargar();
+    } else {
+        alert(result.error);
+    }
+}
+
+// ======================
+// ELIMINAR
+// ======================
+async function eliminar(id) {
+
+    if (!confirm("¿Eliminar estudiante?")) return;
+
+    const res = await fetch(API + "/" + id, {
+        method: "DELETE",
+        headers: {
+            "Authorization": "Bearer " + token
+        }
+    });
+
+    const result = await res.json();
+
+    if (res.ok) {
+        alert("Eliminado correctamente");
+        cargar();
+    } else {
+        alert(result.error);
+    }
+}
+
+// ======================
+// LIMPIAR FORM
+// ======================
+function limpiarFormulario() {
+    document.getElementById("nombre").value = "";
+    document.getElementById("documento").value = "";
+    document.getElementById("correo").value = "";
+    document.getElementById("edad").value = "";
+}
+
+// ======================
+// LOGOUT
+// ======================
+function logout() {
+    localStorage.removeItem("token");
+    window.location.href = "login.html";
+}
+
+// 🚀 INIT
+cargar();
+</script>
+
+</body>
+</html>

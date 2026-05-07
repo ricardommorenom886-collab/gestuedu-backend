@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Módulos - GESTUEDU</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header>
+  <img src="logo.png" height="40">
+
+  <nav>
+    <a href="index.html" class="btn-azul">Inicio</a>
+    <a href="modulos.html" class="btn-azul">Módulos</a>
+    <a href="conocenos.html" class="btn-azul">Conócenos</a>
+    <a href="contacto.html" class="btn-azul">Contacto</a>
+  </nav>
+
+  <div class="user" id="userSection"></div>
+</header>
+
+<div class="container">
+
+  <h2 style="text-align:center;">Selecciona un módulo</h2>
+
+  <div style="display:flex; gap:30px; justify-content:center; margin-top:40px; flex-wrap:wrap;">
+
+<!-- ESTUDIANTES -->
+<div class="medidor" style="width:250px; text-align:center;">
+  <h3>Estudiantes</h3>
+  <p>Gestiona estudiantes (CRUD completo)</p>
+  <button onclick="ir('estudiantes.html')" class="selector">
+    Ir
+  </button>
+</div>
+
+<!-- CURSOS -->
+<div class="medidor" style="width:250px; text-align:center;">
+  <h3>Materias</h3>
+  <p>Gestiona materias</p>
+  <button onclick="ir('materias.html')" class="selector">
+    Ir
+  </button>
+</div>
+
+<!-- GRUPOS -->
+<div class="medidor" style="width:250px; text-align:center;">
+  <h3>Grupos</h3>
+  <p>Año, semestre y sección</p>
+  <button onclick="ir('grupos.html')" class="selector">
+    Ir
+  </button>
+</div>
+
+<!-- ASIGNACIONES -->
+<div class="medidor" style="width:250px; text-align:center;">
+  <h3>Asignaciones</h3>
+  <p>Estudiantes, materias y profesores</p>
+  <button onclick="ir('asignaciones.html')" class="selector">
+    Ir
+  </button>
+</div>
+
+<!-- NOTAS -->
+<div class="medidor" style="width:250px; text-align:center;">
+  <h3>Notas</h3>
+  <p>Gestiona calificaciones</p>
+  <button onclick="ir('notas.html')" class="selector">
+    Ir
+  </button>
+</div>
+
+<!-- USUARIOS -->
+<div class="medidor" style="width:250px; text-align:center;">
+  <h3>Usuarios</h3>
+  <p>Gestiona usuarios del sistema</p>
+  <button onclick="ir('usuarios.html')" class="selector">
+    Ir
+  </button>
+</div>
+
+  </div>
+
+</div>
+
+<footer>
+  © 2026 GESTUEDU — Proyecto SENA
+</footer>
+
+<script>
+const token = localStorage.getItem("token");
+const userSection = document.getElementById("userSection");
+
+// 🔒 PROTEGER
+if (!token) {
+  window.location.href = "login.html";
+}
+
+// 🔥 HEADER DINÁMICO
+userSection.innerHTML = `
+  <button onclick="logout()" class="btn-azul">Cerrar Sesión</button>
+`;
+
+// 🚀 IR A MÓDULO
+function ir(pagina) {
+  window.location.href = pagina;
+}
+
+// 🔒 LOGOUT
+function logout() {
+  localStorage.removeItem("token");
+  window.location.href = "login.html";
+}
+</script>
+
+</body>
+</html>

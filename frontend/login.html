@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - GESTUEDU</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+
+<section class="contenedor-login">
+    <div class="login-caja">
+        <h2>Iniciar Sesión</h2>
+
+        <form onsubmit="handleLogin(event)">
+            <input type="email" id="correo" placeholder="Correo" required>
+            <input type="password" id="clave" placeholder="Contraseña" required>
+
+            <button type="submit">Ingresar</button>
+        </form>
+
+        <p>
+            ¿No tienes cuenta?
+            <a href="forms.html">Regístrate</a>
+        </p>
+    </div>
+</section>
+
+<script>
+// ======================
+// 🔒 SI YA ESTÁ LOGUEADO, NO VUELVE AL LOGIN
+// ======================
+const token = localStorage.getItem("token");
+
+if (token) {
+    window.location.href = "notas.html";
+}
+
+// ======================
+// 🔑 LOGIN
+// ======================
+async function handleLogin(e) {
+    e.preventDefault();
+
+    const email = document.getElementById("correo").value.trim();
+    const password = document.getElementById("clave").value.trim();
+
+    if (!email || !password) {
+        alert("Completa todos los campos");
+        return;
+    }
+
+    try {
+        const res = await fetch("http://localhost:3000/api/auth/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ email, password })
+        });
+
+        const data = await res.json();
+
+        // 🔍 DEBUG
+        console.log("RESPUESTA LOGIN:", data);
+
+        if (res.ok && data.token) {
+            localStorage.setItem("token", data.token);
+
+            // 🔥 redirección limpia
+            window.location.replace("index.html");
+        } else {
+            alert(data.error || "Credenciales incorrectas");
+        }
+
+    } catch (error) {
+        console.error("Error:", error);
+        alert("No se pudo conectar al servidor");
+    }
+}
+</script>
+
+</body>
+</html>

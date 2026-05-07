@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Contacto - GESTUEDU</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header>
+  <img src="logo.png" alt="Logo GESTUEDU" height="40">
+
+  <nav>
+    <a href="index.html" class="btn-azul">Inicio</a>
+    <a href="modulos.html" class="btn-azul">Módulos</a>
+    <a href="conocenos.html" class="btn-azul">Conócenos</a>
+    <a href="contacto.html" class="btn-azul">Contacto</a>
+  </nav>
+
+  <div class="user" id="userSection"></div>
+</header>
+
+<div class="container" style="max-width: 800px; margin: 0 auto;">
+  <div class="section-title">Contáctanos</div>
+
+  <div class="medidor">
+    <div class="resalt">Envíanos un mensaje</div>
+    <p>¿Tienes dudas o quieres implementar GESTUEDU en tu colegio? Escríbenos.</p>
+
+    <form onsubmit="enviarMensaje(event)" style="display: flex; flex-direction: column; gap: 15px; margin-top: 20px;">
+      
+      <input id="nombre" type="text" placeholder="Tu nombre" required>
+      <input id="correo" type="email" placeholder="ejemplo@correo.com" required>
+      <textarea id="mensaje" rows="4" placeholder="Escribe tu mensaje..." required></textarea>
+
+      <button class="selector" type="submit">Enviar</button>
+    </form>
+
+    <p id="respuesta" style="margin-top:10px;"></p>
+  </div>
+
+  <div class="barra-informacion" style="margin-top: 30px;">
+    <span>📍 Bogotá, Colombia</span>
+    <span>📞 +57 300 000 0000</span>
+    <span>📧 soporte@gestuedu.com</span>
+  </div>
+</div>
+
+<footer>
+  © 2026 GESTUEDU — SENA ADSO
+</footer>
+
+<script>
+const token = localStorage.getItem("token");
+const userSection = document.getElementById("userSection");
+
+// 🔥 HEADER DINÁMICO
+if (token) {
+  userSection.innerHTML = `<button onclick="logout()" class="btn-azul">Cerrar Sesión</button>`;
+} else {
+  userSection.innerHTML = `<a href="login.html" class="btn-azul">Iniciar Sesión</a>`;
+}
+
+function logout() {
+  localStorage.removeItem("token");
+  window.location.href = "login.html";
+}
+
+// 🔥 FORM FUNCIONAL (SIN BACKEND)
+function enviarMensaje(e) {
+  e.preventDefault();
+
+  const nombre = document.getElementById("nombre").value;
+  const correo = document.getElementById("correo").value;
+  const mensaje = document.getElementById("mensaje").value;
+
+  console.log("MENSAJE:", { nombre, correo, mensaje });
+
+  // Simulación realista
+  document.getElementById("respuesta").innerText =
+    "✅ Mensaje enviado correctamente (simulado)";
+
+  e.target.reset();
+}
+</script>
+
+</body>
+</html>

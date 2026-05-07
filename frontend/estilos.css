@@ -1,0 +1,156 @@
+/* ESTILOS GENERALES */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #F7FAEF;
+  margin: 0;
+  padding: 0;
+}
+
+/* ENCABEZADO */
+header {
+  background-color: #F7FAEF;
+  color: black;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  border-bottom: 1px solid #ddd; /* Añadido para separar sutilmente */
+}
+
+/* NAVEGACIÓN */
+nav {
+  background-color: transparent;
+  display: flex;
+  gap: 15px;
+}
+
+.btn-azul {
+  background-color: #0B5394;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-azul:hover {
+  background-color: #093566;
+}
+
+.user {
+  font-size: 0.9rem;
+}
+
+.container {
+  padding: 20px;
+}
+
+.section-title {
+  color: #0B5394;
+  font-size: 1.5rem; /* Ajustado para el inicio */
+  font-weight: bold;
+}
+
+.selector {
+  background-color: #FF9900;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-weight: bold;
+  margin-top: 10px;
+  transition: transform 0.2s;
+}
+
+.selector:hover {
+  transform: scale(1.05);
+}
+
+/* BARRA DE INFORMACIÓN */
+.barra-informacion {
+  background-color: #0B5394;
+  color: white;
+  padding: 15px 20px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-around; /* Mejor distribución para inicio */
+  align-items: center;
+  font-weight: bold;
+  font-family: Arial, sans-serif;
+  font-size: 0.95rem;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.barra-informacion .promedio {
+  color: #FF9900;
+}
+
+/* TARJETAS (Usando tu clase .medidor) */
+.medidor {
+  margin-top: 20px;
+  padding: 25px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* Sombra un poco más marcada */
+}
+
+input, select, textarea {
+  padding: 8px;
+  margin: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-family: Arial, sans-serif;
+}
+
+table {
+  border-collapse: collapse;
+  background: white;
+  margin-top: 20px;
+}
+
+th {
+  background-color: #0B5394;
+  color: white;
+  padding: 10px;
+}
+
+td {
+  padding: 8px;
+  border: 1px solid #ddd;
+}
+
+td input, td select {
+  width: 90%;
+}
+
+.resalt {
+  background-color: #0B5394;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  display: inline-block;
+}
+
+.grafico {
+  margin-top: 15px;
+  font-size: 0.9rem;
+  color: #0B5394;
+  font-weight: bold;
+}
+
+footer {
+  margin-top: 60px;
+  padding: 20px;
+  background-color: #eee;
+  text-align: center;
+  font-size: 0.8rem;
+  color: #666;
+}

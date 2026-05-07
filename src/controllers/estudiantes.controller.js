@@ -1,52 +1,100 @@
 const model = require("../models/estudiante.model");
 
-// 🔐 GET - SOLO estudiantes del usuario
-exports.getEstudiantes = (req, res) => {
-  model.getByUser(req.user.id, (err, result) => {
-    if (err) {
-      return res.status(500).json({ error: "Error al obtener estudiantes" });
+// GET ALL
+exports.getEstudiantes = async (req, res) => {
+  try {
+    const data = await model.getAll(req.user.id);
+
+    if (req.user.rol === "estudiante" && req.user.dni) {
+      return res.json(data.filter(e => e.documento === req.user.dni));
     }
 
-    res.json(result);
-  });
+    res.json(data);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Error al obtener estudiantes" });
+  }
 };
 
-// POST
-exports.createEstudiante = (req, res) => {
-  model.create(req.body, req.user.id, (err, result) => {
-    if (err) {
-      if (err.message === "Curso no autorizado") {
-        return res.status(403).json({ error: err.message });
-      }
-      return res.status(500).json({ error: "Error al crear estudiante" });
+// GET BY ID ⭐ (TE FALTABA ESTO)
+exports.getEstudianteById = async (req, res) => {
+  try {
+    const data = await model.getById(req.params.id, req.user.id);
+
+    if (!data) {
+      return res.status(404).json({ error: "Estudiante no encontrado" });
     }
 
-    res.json({ message: "Estudiante creado", id: result.insertId });
-  });
+    res.json(data);
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Error al obtener estudiante" });
+  }
 };
 
-// PUT
-exports.updateEstudiante = (req, res) => {
-  model.update(req.params.id, req.body, req.user.id, (err, result) => {
-    if (err) return res.status(500).json({ error: "Error al actualizar" });
+// CREATE
+exports.createEstudiante = async (req, res) => {
+  try {
+    const { nombre, documento, correo, edad, usuario_id } = req.body;
+
+    if (!nombre || !documento || !correo || !edad) {
+      return res.status(400).json({
+        error: "Faltan campos obligatorios"
+      });
+    }
+
+    const result = await model.create({
+      nombre,
+      documento,
+      correo,
+      edad,
+      usuario_id
+    });
+
+    res.json({
+      message: "Estudiante creado correctamente",
+      id: result.insertId
+    });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      error: err.message || "Error al crear estudiante"
+    });
+  }
+};
+
+// UPDATE
+exports.updateEstudiante = async (req, res) => {
+  try {
+    const result = await model.update(req.params.id, req.body, req.user.id);
 
     if (result.affectedRows === 0) {
-      return res.status(403).json({ error: "No autorizado" });
+      return res.status(404).json({ error: "No encontrado" });
     }
 
-    res.json({ message: "Estudiante actualizado" });
-  });
+    res.json({ message: "Actualizado correctamente" });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Error al actualizar" });
+  }
 };
 
 // DELETE
-exports.deleteEstudiante = (req, res) => {
-  model.delete(req.params.id, req.user.id, (err, result) => {
-    if (err) return res.status(500).json({ error: "Error al eliminar" });
+exports.deleteEstudiante = async (req, res) => {
+  try {
+    const result = await model.remove(req.params.id, req.user.id);
 
     if (result.affectedRows === 0) {
-      return res.status(403).json({ error: "No autorizado" });
+      return res.status(404).json({ error: "No encontrado" });
     }
 
-    res.json({ message: "Estudiante eliminado" });
-  });
+    res.json({ message: "Eliminado correctamente" });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Error al eliminar" });
+  }
 };

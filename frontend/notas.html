@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Notas - GESTUEDU</title>
+<link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+<header>
+  <img src="logo.png" height="40">
+  <nav>
+    <a href="modulos.html" class="btn-azul">Módulos</a>
+    <a href="asignaciones.html" class="btn-azul">Asignaciones</a>
+    <a href="estudiantes.html" class="btn-azul">Estudiantes</a>
+  </nav>
+  <button onclick="logout()" class="btn-azul">Cerrar Sesión</button>
+</header>
+
+<div class="container">
+  <h2>Gestión de Notas</h2>
+
+  <div class="medidor">
+    <h3>Crear Nota</h3>
+    <select id="grupo_id"><option value="">Grupo</option></select>
+    <select id="materia_id"><option value="">Materia</option></select>
+    <select id="estudiante_id"><option value="">Estudiante</option></select>
+    <input id="nota" type="number" step="0.01" min="0" max="5" placeholder="Nota">
+    <input id="observacion" placeholder="Observación">
+    <button onclick="crear()">Crear</button>
+  </div>
+
+  <table width="100%">
+    <thead>
+      <tr>
+        <th>Estudiante</th>
+        <th>DNI</th>
+        <th>Grupo</th>
+        <th>Materia</th>
+        <th>Nota</th>
+        <th>Observación</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody id="tabla"></tbody>
+  </table>
+</div>
+
+<script>
+const API = "http://localhost:3000/api";
+const token = localStorage.getItem("token");
+let estudiantes = [];
+let grupos = [];
+let materias = [];
+
+if (!token) window.location.href = "login.html";
+
+function headers() {
+  return { "Content-Type": "application/json", Authorization: "Bearer " + token };
+}
+
+function llenarSelect(select, data, campo, seleccionado) {
+  select.innerHTML = `<option value="">Seleccione</option>`;
+  data.forEach(x => {
+    const sel = x.id == seleccionado ? "selected" : "";
+    select.innerHTML += `<option value="${x.id}" ${sel}>${x[campo]}</option>`;
+  });
+}
+
+function opciones(data, campo, seleccionado) {
+  let html = `<option value="">Seleccione</option>`;
+  data.forEach(x => {
+    const sel = x.id == seleccionado ? "selected" : "";
+    html += `<option value="${x.id}" ${sel}>${x[campo]}</option>`;
+  });
+  return html;
+}
+
+async function cargarCombos() {
+  estudiantes = await (await fetch(API + "/estudiantes", { headers: headers() })).json();
+  grupos = await (await fetch(API + "/academico/grupos", { headers: headers() })).json();
+  materias = await (await fetch(API + "/academico/materias", { headers: headers() })).json();
+  llenarSelect(estudiante_id, estudiantes, "nombre");
+  llenarSelect(grupo_id, grupos, "nombre");
+  llenarSelect(materia_id, materias, "nombre");
+}
+
+async function cargar() {
+  await cargarCombos();
+  const data = await (await fetch(API + "/notas", { headers: headers() })).json();
+  tabla.innerHTML = "";
+
+  data.forEach(n => {
+    tabla.innerHTML += `
+      <tr>
+        <td><select id="e${n.id}">${opciones(estudiantes, "nombre", n.estudiante_id)}</select></td>
+        <td>${n.documento || ""}</td>
+        <td><select id="g${n.id}">${opciones(grupos, "nombre", n.grupo_id)}</select></td>
+        <td><select id="m${n.id}">${opciones(materias, "nombre", n.materia_id)}</select></td>
+        <td><input id="n${n.id}" type="number" step="0.01" value="${n.nota}"></td>
+        <td><input id="o${n.id}" value="${n.observacion || ""}"></td>
+        <td>
+          <button onclick="editar(${n.id})">Editar</button>
+          <button onclick="eliminar(${n.id})">Eliminar</button>
+        </td>
+      </tr>`;
+  });
+}
+
+async function crear() {
+  const data = {
+    estudiante_id: estudiante_id.value,
+    grupo_id: grupo_id.value,
+    materia_id: materia_id.value,
+    nota: nota.value,
+    observacion: observacion.value
+  };
+
+  const res = await fetch(API + "/notas", { method: "POST", headers: headers(), body: JSON.stringify(data) });
+  const r = await res.json();
+  if (res.ok) { alert("Nota creada"); nota.value = ""; observacion.value = ""; cargar(); } else alert(r.error);
+}
+
+async function editar(id) {
+  const data = {
+    estudiante_id: document.getElementById("e" + id).value,
+    grupo_id: document.getElementById("g" + id).value,
+    materia_id: document.getElementById("m" + id).value,
+    nota: document.getElementById("n" + id).value,
+    observacion: document.getElementById("o" + id).value
+  };
+
+  const res = await fetch(API + "/notas/" + id, { method: "PUT", headers: headers(), body: JSON.stringify(data) });
+  const r = await res.json();
+  if (res.ok) { alert("Nota actualizada"); cargar(); } else alert(r.error);
+}
+
+async function eliminar(id) {
+  if (!confirm("¿Eliminar nota?")) return;
+  const res = await fetch(API + "/notas/" + id, { method: "DELETE", headers: headers() });
+  const r = await res.json();
+  if (res.ok) { alert("Nota eliminada"); cargar(); } else alert(r.error);
+}
+
+function logout() { localStorage.removeItem("token"); window.location.href = "login.html"; }
+cargar();
+</script>
+</body>
+</html>

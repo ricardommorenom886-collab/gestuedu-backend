@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - GESTUEDU</title>
+    <link rel="stylesheet" href="forms.css">
+</head>
+
+<body>
+
+<header>
+    <img src="logo.png" alt="Logo GESTUEDU" height="40">
+
+<nav>
+    <a href="index.html" class="btn-azul">Inicio</a>
+    <a href="notas.html" class="btn-azul">Módulos</a>
+    <a href="conocenos.html" class="btn-azul">Conócenos</a>
+    <a href="contacto.html" class="btn-azul">Contacto</a>
+</nav>
+
+<div class="user">
+    <a href="login.html" class="btn-azul" style="text-decoration: none;">
+        Iniciar Sesión
+    </a>
+</div>
+
+</header>
+
+<section class="formulario">
+    <h2>Registro de Usuario</h2>
+
+<form onsubmit="handleRegister(event)">
+
+    <label>Nombre</label>
+    <input type="text" id="nombre" placeholder="Nombre completo" required>
+
+    <label>Correo</label>
+    <input type="email" id="email" placeholder="ejemplo@correo.com" required>
+
+    <label>DNI</label>
+    <input type="text" id="dni" placeholder="Documento">
+
+    <label>Contraseña</label>
+    <input type="password" id="password" placeholder="Mínimo 6 caracteres" required>
+
+    <label>Rol</label>
+    <select id="rol">
+        <option value="estudiante">estudiante</option>
+        <option value="profesor">profesor</option>
+        <option value="admin">admin</option>
+    </select>
+
+    <button type="submit" class="btn-enviar">Registrar</button>
+    <button type="button" onclick="volver()" class="btn-cancelar">
+        Cancelar
+    </button>
+
+</form>
+
+</section>
+
+<footer>
+    © 2026 GESTUEDU — Proyecto SENA ADSO
+</footer>
+
+<script>
+async function handleRegister(e) {
+    e.preventDefault();
+
+    const nombre = document.getElementById("nombre").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const dni = document.getElementById("dni").value.trim();
+    const password = document.getElementById("password").value;
+    const rol = document.getElementById("rol").value;
+
+    // 🔥 VALIDACIONES
+    if (!nombre || !email || !password) {
+        alert("Todos los campos son obligatorios");
+        return;
+    }
+
+    if (password.length < 6) {
+        alert("La contraseña debe tener mínimo 6 caracteres");
+        return;
+    }
+
+    try {
+        const res = await fetch("http://localhost:3000/api/auth/register", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ nombre, email, password, rol, dni })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+            alert("Usuario registrado correctamente");
+            window.location.href = "login.html";
+        } else {
+            alert(data.error || "Error en registro");
+        }
+
+    } catch (error) {
+        console.error(error);
+        alert("No se pudo conectar con el servidor");
+    }
+}
+
+function volver() {
+    window.location.href = "index.html";
+}
+</script>
+
+</body>
+</html>

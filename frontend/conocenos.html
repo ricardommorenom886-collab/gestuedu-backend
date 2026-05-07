@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Conócenos - GESTUEDU</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header>
+  <img src="logo.png" alt="Logo GESTUEDU" height="40">
+
+  <nav>
+    <a href="index.html" class="btn-azul">Inicio</a>
+    <a href="modulos.html" class="btn-azul">Módulos</a>
+    <a href="conocenos.html" class="btn-azul">Conócenos</a>
+    <a href="contacto.html" class="btn-azul">Contacto</a>
+  </nav>
+
+  <div class="user" id="userSection"></div>
+</header>
+
+<div class="container">
+  <div class="section-title">Nuestra Identidad</div>
+
+  <!-- TARJETA PRINCIPAL -->
+  <div class="medidor">
+    <div class="resalt">¿Qué es GESTUEDU?</div>
+    <p style="line-height: 1.6;">
+      GESTUEDU es una plataforma de gestión académica que permite administrar estudiantes,
+      cursos y calificaciones en un solo sistema centralizado, facilitando el trabajo
+      de docentes y administradores.
+    </p>
+  </div>
+
+  <!-- MISIÓN Y VISIÓN -->
+  <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-top: 20px;">
+
+    <div class="medidor" style="flex: 1; min-width: 300px;">
+      <div class="resalt" style="background-color: #FF9900;">Nuestra Misión</div>
+      <p>
+        Brindar herramientas tecnológicas que optimicen la gestión educativa
+        y mejoren la comunicación entre la comunidad académica.
+      </p>
+    </div>
+
+    <div class="medidor" style="flex: 1; min-width: 300px;">
+      <div class="resalt" style="background-color: #FF9900;">Nuestra Visión</div>
+      <p>
+        Ser una plataforma líder en gestión escolar, reconocida por su facilidad
+        de uso y eficiencia en el manejo de información académica.
+      </p>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  © 2026 GESTUEDU — Proyecto SENA ADSO
+</footer>
+
+<script>
+const token = localStorage.getItem("token");
+const userSection = document.getElementById("userSection");
+
+// 🔥 HEADER DINÁMICO
+if (token) {
+  userSection.innerHTML = `
+    <button onclick="logout()" class="btn-azul">Cerrar Sesión</button>
+  `;
+} else {
+  userSection.innerHTML = `
+    <a href="login.html" class="btn-azul">Iniciar Sesión</a>
+  `;
+}
+
+// 🔒 LOGOUT
+function logout() {
+  localStorage.removeItem("token");
+  window.location.href = "login.html";
+}
+</script>
+
+</body>
+</html>

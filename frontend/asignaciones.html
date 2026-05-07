@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Asignaciones - GESTUEDU</title>
+<link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+<header>
+  <img src="logo.png" height="40">
+  <nav>
+    <a href="modulos.html" class="btn-azul">Módulos</a>
+    <a href="estudiantes.html" class="btn-azul">Estudiantes</a>
+    <a href="materias.html" class="btn-azul">Materias</a>
+    <a href="grupos.html" class="btn-azul">Grupos</a>
+    <a href="notas.html" class="btn-azul">Notas</a>
+  </nav>
+  <button onclick="logout()" class="btn-azul">Cerrar Sesión</button>
+</header>
+
+<div class="container">
+  <h2>Asignaciones</h2>
+
+  <div class="medidor">
+    <h3>Buscar estudiante y asignar a grupo</h3>
+    <input id="buscar" placeholder="Nombre o DNI">
+    <button onclick="buscarEstudiantes()">Buscar</button>
+    <select id="estudiante_id"><option value="">Seleccione estudiante</option></select>
+    <select id="grupo_estudiante_id"><option value="">Seleccione grupo</option></select>
+    <button onclick="asignarEstudiante()">Asignar estudiante</button>
+  </div>
+
+  <div class="medidor">
+    <h3>Asignar materia a grupo</h3>
+    <select id="grupo_materia_id"><option value="">Seleccione grupo</option></select>
+    <select id="materia_grupo_id"><option value="">Seleccione materia</option></select>
+    <button onclick="asignarMateriaGrupo()">Asignar materia</button>
+  </div>
+
+  <div class="medidor">
+    <h3>Asignar profesor a materia y grupo</h3>
+    <select id="profesor_id"><option value="">Seleccione profesor</option></select>
+    <select id="grupo_profesor_id"><option value="">Seleccione grupo</option></select>
+    <select id="materia_profesor_id"><option value="">Seleccione materia</option></select>
+    <button onclick="asignarProfesorMateria()">Asignar profesor</button>
+  </div>
+
+  <h3>Estudiantes en grupos</h3>
+  <table width="100%">
+    <thead><tr><th>Grupo</th><th>Estudiante</th><th>DNI</th><th>Acción</th></tr></thead>
+    <tbody id="tablaGE"></tbody>
+  </table>
+
+  <h3>Materias por grupo</h3>
+  <table width="100%">
+    <thead><tr><th>Grupo</th><th>Materia</th><th>Acción</th></tr></thead>
+    <tbody id="tablaGM"></tbody>
+  </table>
+
+  <h3>Profesores asignados</h3>
+  <table width="100%">
+    <thead><tr><th>Profesor</th><th>Grupo</th><th>Materia</th><th>Acción</th></tr></thead>
+    <tbody id="tablaPM"></tbody>
+  </table>
+</div>
+
+<script>
+const API = "http://localhost:3000/api/academico";
+const token = localStorage.getItem("token");
+let grupos = [];
+let materias = [];
+let profesores = [];
+
+if (!token) window.location.href = "login.html";
+
+function headers() {
+  return { "Content-Type": "application/json", Authorization: "Bearer " + token };
+}
+
+async function cargarCombos() {
+  grupos = await (await fetch(API + "/grupos", { headers: headers() })).json();
+  materias = await (await fetch(API + "/materias", { headers: headers() })).json();
+  profesores = await (await fetch(API + "/profesores", { headers: headers() })).json();
+
+  llenarSelect(grupo_estudiante_id, grupos, "nombre");
+  llenarSelect(grupo_materia_id, grupos, "nombre");
+  llenarSelect(grupo_profesor_id, grupos, "nombre");
+  llenarSelect(materia_grupo_id, materias, "nombre");
+  llenarSelect(materia_profesor_id, materias, "nombre");
+  llenarSelect(profesor_id, profesores, "nombre");
+}
+
+function llenarSelect(select, data, campo) {
+  select.innerHTML = `<option value="">Seleccione</option>`;
+  data.forEach(x => {
+    select.innerHTML += `<option value="${x.id}">${x[campo]}</option>`;
+  });
+}
+
+async function buscarEstudiantes() {
+  const data = await (await fetch(API + "/buscar-estudiantes?buscar=" + buscar.value, { headers: headers() })).json();
+  llenarSelect(estudiante_id, data, "nombre");
+}
+
+async function asignarEstudiante() {
+  const data = { grupo_id: grupo_estudiante_id.value, estudiante_id: estudiante_id.value };
+  const res = await fetch(API + "/asignar-estudiante", { method: "POST", headers: headers(), body: JSON.stringify(data) });
+  const r = await res.json();
+  if (res.ok) { alert("Estudiante asignado"); cargarAsignaciones(); } else alert(r.error);
+}
+
+async function asignarMateriaGrupo() {
+  const data = { grupo_id: grupo_materia_id.value, materia_id: materia_grupo_id.value };
+  const res = await fetch(API + "/asignar-materia-grupo", { method: "POST", headers: headers(), body: JSON.stringify(data) });
+  const r = await res.json();
+  if (res.ok) { alert("Materia asignada"); cargarAsignaciones(); } else alert(r.error);
+}
+
+async function asignarProfesorMateria() {
+  const data = { profesor_id: profesor_id.value, grupo_id: grupo_profesor_id.value, materia_id: materia_profesor_id.value };
+  const res = await fetch(API + "/asignar-profesor-materia", { method: "POST", headers: headers(), body: JSON.stringify(data) });
+  const r = await res.json();
+  if (res.ok) { alert("Profesor asignado"); cargarAsignaciones(); } else alert(r.error);
+}
+
+async function cargarAsignaciones() {
+  const data = await (await fetch(API + "/asignaciones", { headers: headers() })).json();
+
+  tablaGE.innerHTML = "";
+  data.grupoEstudiantes.forEach(x => {
+    tablaGE.innerHTML += `<tr><td>${x.grupo}</td><td>${x.estudiante}</td><td>${x.documento}</td><td><button onclick="quitar('/asignar-estudiante/', ${x.id})">Quitar</button></td></tr>`;
+  });
+
+  tablaGM.innerHTML = "";
+  data.grupoMaterias.forEach(x => {
+    tablaGM.innerHTML += `<tr><td>${x.grupo}</td><td>${x.materia}</td><td><button onclick="quitar('/asignar-materia-grupo/', ${x.id})">Quitar</button></td></tr>`;
+  });
+
+  tablaPM.innerHTML = "";
+  data.profesorMaterias.forEach(x => {
+    tablaPM.innerHTML += `<tr><td>${x.profesor}</td><td>${x.grupo}</td><td>${x.materia}</td><td><button onclick="quitar('/asignar-profesor-materia/', ${x.id})">Quitar</button></td></tr>`;
+  });
+}
+
+async function quitar(ruta, id) {
+  if (!confirm("¿Quitar asignación?")) return;
+  await fetch(API + ruta + id, { method: "DELETE", headers: headers() });
+  cargarAsignaciones();
+}
+
+function logout() { localStorage.removeItem("token"); window.location.href = "login.html"; }
+
+cargarCombos();
+cargarAsignaciones();
+</script>
+</body>
+</html>

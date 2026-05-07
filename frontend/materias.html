@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Materias - GESTUEDU</title>
+<link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+<header>
+  <img src="logo.png" height="40">
+  <nav>
+    <a href="modulos.html" class="btn-azul">Módulos</a>
+    <a href="grupos.html" class="btn-azul">Grupos</a>
+    <a href="asignaciones.html" class="btn-azul">Asignaciones</a>
+    <a href="notas.html" class="btn-azul">Notas</a>
+  </nav>
+  <button onclick="logout()" class="btn-azul">Cerrar Sesión</button>
+</header>
+
+<div class="container">
+  <h2>Gestión de Materias</h2>
+  <div class="medidor">
+    <h3>Crear Materia</h3>
+    <input id="nombre" placeholder="Nombre">
+    <input id="descripcion" placeholder="Descripción">
+    <button onclick="crear()">Crear</button>
+  </div>
+
+  <table width="100%">
+    <thead>
+      <tr><th>Nombre</th><th>Descripción</th><th>Acciones</th></tr>
+    </thead>
+    <tbody id="tabla"></tbody>
+  </table>
+</div>
+
+<script>
+const API = "http://localhost:3000/api/academico/materias";
+const token = localStorage.getItem("token");
+if (!token) window.location.href = "login.html";
+
+async function cargar() {
+  const res = await fetch(API, { headers: { Authorization: "Bearer " + token } });
+  const data = await res.json();
+  tabla.innerHTML = "";
+  data.forEach(m => {
+    tabla.innerHTML += `
+      <tr>
+        <td><input id="n${m.id}" value="${m.nombre}"></td>
+        <td><input id="d${m.id}" value="${m.descripcion || ""}"></td>
+        <td>
+          <button onclick="editar(${m.id})">Editar</button>
+          <button onclick="eliminar(${m.id})">Eliminar</button>
+        </td>
+      </tr>`;
+  });
+}
+
+async function crear() {
+  const data = { nombre: nombre.value, descripcion: descripcion.value };
+  const res = await fetch(API, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
+    body: JSON.stringify(data)
+  });
+  const r = await res.json();
+  if (res.ok) { alert("Materia creada"); nombre.value = ""; descripcion.value = ""; cargar(); }
+  else alert(r.error);
+}
+
+async function editar(id) {
+  const data = { nombre: document.getElementById("n" + id).value, descripcion: document.getElementById("d" + id).value };
+  const res = await fetch(API + "/" + id, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
+    body: JSON.stringify(data)
+  });
+  const r = await res.json();
+  if (res.ok) { alert("Materia actualizada"); cargar(); } else alert(r.error);
+}
+
+async function eliminar(id) {
+  if (!confirm("¿Eliminar materia?")) return;
+  const res = await fetch(API + "/" + id, { method: "DELETE", headers: { Authorization: "Bearer " + token } });
+  const r = await res.json();
+  if (res.ok) { alert("Materia eliminada"); cargar(); } else alert(r.error);
+}
+
+function logout() { localStorage.removeItem("token"); window.location.href = "login.html"; }
+cargar();
+</script>
+</body>
+</html>

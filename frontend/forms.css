@@ -1,0 +1,124 @@
+/* ======== FORMULARIO DE REGISTRO ======== */
+.formulario {
+    width: 90%;               /* Se adapta al ancho de la pantalla */
+    max-width: 400px;         /* No sobrepasa los 400px */
+    margin: 50px auto;
+    background-color: #F7FAEF;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 10px #0B5394;
+}
+
+/* ======== ESTILO GENERAL ======== */
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh; /* Asegura que ocupe toda la pantalla */
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0B5394 0%, #0B5394 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+/* ======== TÍTULO ======== */
+.formulario h2 {
+    text-align: center;
+    color: #0B5394;
+    margin-bottom: 20px;
+}
+
+/* ======== ETIQUETAS ======== */
+.formulario label {
+    display: block;
+    font-weight: bold;
+    margin-top: 10px;
+    color: #0B5394;
+}
+
+/* ======== CAMPOS DE TEXTO Y SELECT ======== */
+.formulario input,
+.formulario select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+/* ======== EFECTO AL ENFOCAR ======== */
+.formulario input:focus,
+.formulario select:focus {
+    border-color: #0B5394;
+    outline: none;
+}
+
+/* ======== BOTONES ======== */
+.btn-enviar {
+    width: 48%;
+    background-color: #0B5394;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-cancelar {
+    width: 48%;
+    background-color: #ffffff;
+    color: #0B5394;
+    border: 2px solid #0B5394;
+    margin-top: 20px;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s, color 0.3s, transform 0.2s;
+}
+
+/* ======== EFECTO HOVER ======== */
+.btn-enviar:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.btn-cancelar:hover {
+    background-color: #FF9900;
+    color: white;
+    transform: scale(1.05);
+}
+
+/* ======== DISEÑO RESPONSIVO ======== */
+@media (max-width: 600px) {
+    .formulario {
+        width: 95%;
+        padding: 20px;
+        margin: 20px;
+    }
+
+    .formulario h2 {
+        font-size: 20px;
+    }
+
+    .formulario label {
+        font-size: 14px;
+    }
+
+    .formulario input,
+    .formulario select {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .btn-enviar,
+    .btn-cancelar {
+        width: 100%; /* Los botones ocupan todo el ancho */
+        margin-top: 10px;
+    }
+}

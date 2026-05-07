@@ -3,11 +3,46 @@ const router = express.Router();
 
 const controller = require("../controllers/estudiantes.controller");
 const verifyToken = require("../middlewares/auth.middleware");
+const allowRoles = require("../middlewares/role.middleware");
 
-// 👇 RUTAS
-router.get("/", verifyToken, controller.getEstudiantes);
-router.post("/", verifyToken, controller.createEstudiante);
-router.put("/:id", verifyToken, controller.updateEstudiante);
-router.delete("/:id", verifyToken, controller.deleteEstudiante);
+// 🔍 VER TODOS
+router.get(
+  "/",
+  verifyToken,
+  allowRoles("admin", "user", "usuario", "profesor", "estudiante"),
+  controller.getEstudiantes
+);
+
+// 🔍 VER POR ID ⭐ (TE FALTABA ESTA RUTA)
+router.get(
+  "/:id",
+  verifyToken,
+  allowRoles("admin", "user", "usuario", "profesor", "estudiante"),
+  controller.getEstudianteById
+);
+
+// ➕ CREAR
+router.post(
+  "/",
+  verifyToken,
+  allowRoles("admin", "user", "usuario", "profesor"),
+  controller.createEstudiante
+);
+
+// ✏️ ACTUALIZAR
+router.put(
+  "/:id",
+  verifyToken,
+  allowRoles("admin", "user", "usuario", "profesor"),
+  controller.updateEstudiante
+);
+
+// ❌ ELIMINAR
+router.delete(
+  "/:id",
+  verifyToken,
+  allowRoles("admin", "user", "usuario", "profesor"),
+  controller.deleteEstudiante
+);
 
 module.exports = router;

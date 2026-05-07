@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Cursos - GESTUEDU</title>
+<link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header>
+  <img src="logo.png" height="40">
+  <nav>
+    <a href="index.html" class="btn-azul">Inicio</a>
+    <a href="modulos.html" class="btn-azul">Módulos</a>
+    <a href="estudiantes.html" class="btn-azul">Estudiantes</a>
+    <a href="notas.html" class="btn-azul">Notas</a>
+  </nav>
+  <button onclick="logout()" class="btn-azul">Cerrar Sesión</button>
+</header>
+
+<div class="container">
+  <h2>Gestión de Cursos</h2>
+
+  <div class="medidor">
+    <h3>Crear Curso</h3>
+    <input type="text" id="nombre" placeholder="Nombre del curso">
+    <input type="text" id="descripcion" placeholder="Descripción">
+    <button onclick="crearCurso()">Crear</button>
+  </div>
+
+  <table border="1" width="100%">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody id="tabla"></tbody>
+  </table>
+</div>
+
+<script>
+const API = "http://localhost:3000/api/cursos";
+const token = localStorage.getItem("token");
+
+if (!token) {
+  window.location.href = "login.html";
+}
+
+async function cargar() {
+  const res = await fetch(API, {
+    headers: {
+      "Authorization": "Bearer " + token
+    }
+  });
+
+  const data = await res.json();
+  const tabla = document.getElementById("tabla");
+  tabla.innerHTML = "";
+
+  data.forEach(c => {
+    tabla.innerHTML += `
+      <tr>
+        <td><input value="${c.nombre}" id="n${c.id}"></td>
+        <td><input value="${c.descripcion || ""}" id="d${c.id}"></td>
+        <td>
+          <button onclick="editar(${c.id})">Editar</button>
+          <button onclick="eliminar(${c.id})">Eliminar</button>
+        </td>
+      </tr>
+    `;
+  });
+}
+
+async function crearCurso() {
+  const data = {
+    nombre: document.getElementById("nombre").value,
+    descripcion: document.getElementById("descripcion").value
+  };
+
+  const res = await fetch(API, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + token
+    },
+    body: JSON.stringify(data)
+  });
+
+  const result = await res.json();
+
+  if (res.ok) {
+    alert("Curso creado");
+    document.getElementById("nombre").value = "";
+    document.getElementById("descripcion").value = "";
+    cargar();
+  } else {
+    alert(result.error);
+  }
+}
+
+async function editar(id) {
+  const data = {
+    nombre: document.getElementById("n" + id).value,
+    descripcion: document.getElementById("d" + id).value
+  };
+
+  const res = await fetch(API + "/" + id, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + token
+    },
+    body: JSON.stringify(data)
+  });
+
+  const result = await res.json();
+
+  if (res.ok) {
+    alert("Curso actualizado");
+    cargar();
+  } else {
+    alert(result.error);
+  }
+}
+
+async function eliminar(id) {
+  if (!confirm("¿Eliminar curso?")) return;
+
+  const res = await fetch(API + "/" + id, {
+    method: "DELETE",
+    headers: {
+      "Authorization": "Bearer " + token
+    }
+  });
+
+  const result = await res.json();
+
+  if (res.ok) {
+    alert("Curso eliminado");
+    cargar();
+  } else {
+    alert(result.error);
+  }
+}
+
+function logout() {
+  localStorage.removeItem("token");
+  window.location.href = "login.html";
+}
+
+cargar();
+</script>
+
+</body>
+</html>

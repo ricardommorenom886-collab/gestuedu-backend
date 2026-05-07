@@ -2,111 +2,107 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>GestuEdu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inicio - GESTUEDU</title>
+  <link rel="stylesheet" href="estilos.css">
 </head>
+
 <body>
 
-  <h1>Gestión de Estudiantes</h1>
+<header>
+  <img src="logo.png" alt="Logo GESTUEDU" height="40">
 
-  <!-- 🟢 FORMULARIO -->
-  <h2>Registrar Estudiante</h2>
-  <input type="text" id="nombre" placeholder="Nombre">
-  <input type="email" id="correo" placeholder="Correo">
-  <input type="number" id="edad" placeholder="Edad">
-  <button id="btnGuardar">Guardar</button>
+  <nav>
+    <a href="index.html" class="btn-azul">Inicio</a>
+    <a href="modulos.html" class="btn-azul">Módulos</a>
+    <a href="conocenos.html" class="btn-azul">Conócenos</a>
+    <a href="contacto.html" class="btn-azul">Contacto</a>
+  </nav>
 
-  <!-- 🔵 LISTA -->
-  <h2>Lista de Estudiantes</h2>
-  <ul id="lista"></ul>
+  <div class="user" id="userSection">
+    <!-- SE LLENA CON JS -->
+  </div>
+</header>
 
-  <script>
-    // 🔥 API CORRECTA
-    let editandoId = null;
+<div class="container">
+    
+  <div class="medidor" style="text-align: center; padding: 50px 20px;">
+    <div class="section-title" style="font-size: 2.5rem; margin-bottom: 20px;">
+      Bienvenido a GESTUEDU
+    </div>
 
-  const API = "http://localhost:3000/api/estudiantes";
+    <p style="font-size: 1.2rem; color: #555; max-width: 800px; margin: 0 auto 30px;">
+      Plataforma de gestión escolar para estudiantes, docentes y administradores.
+    </p>
+  </div>
 
-    // 🔵 OBTENER ESTUDIANTES
-    async function obtenerEstudiantes() {
-      const res = await fetch(API);
-      const data = await res.json();
+  <div class="barra-informacion">
+    <span>🚀 +500 Instituciones</span>
+    <span>👥 +10,000 Estudiantes</span>
+    <span>⭐ Calificación: <span class="promedio">4.9/5</span></span>
+    <span>📅 Periodo Actual: 2025-1</span>
+  </div>
 
-      console.log("Estudiantes:", data);
+  <div class="section-title" style="margin-top: 40px; text-align: center;">
+    Nuestros Módulos
+  </div>
 
-      const lista = document.getElementById("lista");
-      lista.innerHTML = "";
+  <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-top: 20px;">
+    
+    <div class="medidor" style="flex: 1; min-width: 280px;">
+      <div class="resalt">Calificaciones</div>
+      <p>Consulta notas y rendimiento académico.</p>
+    </div>
 
-      data.forEach(est => {
-        const li = document.createElement("li");
-        li.innerHTML = `
-          ${est.nombre} - ${est.correo} - ${est.edad}
-          <button onclick="eliminarEstudiante(${est.id})">Eliminar</button>
-        `;
-        lista.appendChild(li);
-      });
-    }
+    <div class="medidor" style="flex: 1; min-width: 280px;">
+      <div class="resalt" style="background-color: #FF9900;">Asistencia</div>
+      <p>Control de asistencia y reportes.</p>
+    </div>
 
-    async function crearEstudiante() {
-  const nombre = document.getElementById("nombre").value;
-  const correo = document.getElementById("correo").value;
-  const edad = document.getElementById("edad").value;
+    <div class="medidor" style="flex: 1; min-width: 280px;">
+      <div class="resalt">Convivencia</div>
+      <p>Seguimiento académico y disciplinario.</p>
+    </div>
 
-  let url = API;
-  let method = "POST";
+  </div>
 
-  if (editandoId) {
-    url = `${API}/${editandoId}`;
-    method = "PUT";
-  }
+</div>
 
-  try {
-    const res = await fetch(url, {
-      method: method,
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ nombre, correo, edad })
-    });
+<footer>
+  © 2025 GESTUEDU — Proyecto SENA ADSO
+</footer>
 
-    const data = await res.json();
+<script>
+const token = localStorage.getItem("token");
+const userSection = document.getElementById("userSection");
 
-    console.log("RESPUESTA BACKEND:", data);
-
-    // 🔴 SI HAY ERROR → NO LIMPIAR
-    if (!res.ok) {
-      alert("Error: " + data.message);
-      return;
-    }
-
-    // ✅ SOLO LIMPIAR SI TODO SALE BIEN
-    document.getElementById("nombre").value = "";
-    document.getElementById("correo").value = "";
-    document.getElementById("edad").value = "";
-
-    editandoId = null;
-
-    obtenerEstudiantes();
-
-  } catch (error) {
-    console.error("ERROR:", error);
-    alert("Error de conexión con el servidor");
-  }
+// 🔥 CAMBIAR HEADER SEGÚN LOGIN
+if (token) {
+    userSection.innerHTML = `
+        <button onclick="logout()" class="btn-azul">Cerrar Sesión</button>
+    `;
+} else {
+    userSection.innerHTML = `
+        <a href="login.html" class="btn-azul">Iniciar Sesión</a>
+    `;
 }
 
-    // 🔴 ELIMINAR
-    async function eliminarEstudiante(id) {
-      await fetch(`${API}/${id}`, {
-        method: "DELETE"
-      });
+// 🔒 LOGOUT
+function logout() {
+    localStorage.removeItem("token");
+    window.location.href = "login.html";
+}
 
-      obtenerEstudiantes();
+// 🚀 IR A MÓDULOS
+function irModulos() {
+    if (!token) {
+        alert("Debes iniciar sesión");
+        window.location.href = "login.html";
+    } else {
+        window.location.href = "modulos.html";
     }
-
-    // 🔥 BOTÓN CONECTADO BIEN
-    document.getElementById("btnGuardar").addEventListener("click", crearEstudiante);
-
-    // 🚀 CARGA INICIAL
-    obtenerEstudiantes();
-  </script>
+}
+</script>
 
 </body>
 </html>

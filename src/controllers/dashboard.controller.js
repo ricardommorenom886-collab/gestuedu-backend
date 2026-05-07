@@ -58,20 +58,20 @@ exports.getTopEstudiantes = (req, res) => {
 };
 
 // ======================
-// 📉 MATERIAS CON BAJO PROMEDIO
+// 📉 CURSOS CON BAJO PROMEDIO
 // ======================
 exports.getMateriasBajas = (req, res) => {
   const userId = req.user.id;
 
   const sql = `
     SELECT 
-      n.materia,
+      c.nombre AS curso,
       IFNULL(AVG(n.nota), 0) AS promedio
     FROM notas n
     JOIN estudiantes e ON n.estudiante_id = e.id
     JOIN cursos c ON e.curso_id = c.id
     WHERE c.user_id = ?
-    GROUP BY n.materia
+    GROUP BY c.id, c.nombre
     ORDER BY promedio ASC
     LIMIT 5
   `;
