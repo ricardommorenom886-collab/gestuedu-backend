@@ -154,3 +154,35 @@ footer {
   font-size: 0.8rem;
   color: #666;
 }
+
+.animate__animated {
+  display: block !important;
+  visibility: visible !important;
+}
+
+/*.btn-gestu {
+  background-color: var(--azul-gestu) !important;
+  color: white !important;
+  border: none;
+  padding: 10px 25px;
+  transition: all 0.3s ease;
+  display: inline-block;
+  text-decoration: none; /* Por si es un enlace <a> */
+
+
+.btn-gestu {
+  background-color: #0B5394 !important; /* El azul exacto de tu index */
+  color: white !important;
+  border: none !important;
+  padding: 10px 25px;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.btn-gestu:hover {
+  background-color: #083d6d !important;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(11, 83, 148, 0.3);
+}

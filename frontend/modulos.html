@@ -1,118 +1,206 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Módulos - GESTUEDU</title>
-  <link rel="stylesheet" href="estilos.css">
+  
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Animate.css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+  <style>
+    :root {
+      --azul-gestu: #0B5394;
+      --naranja-gestu: #FF9900;
+      --fondo-gestu: #F7FAEF;
+    }
+
+    body {
+      background-color: var(--fondo-gestu);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .text-azul { color: var(--azul-gestu) !important; }
+
+    /* BOTÓN CERRAR SESIÓN ROJO */
+    .btn-cerrar-sesion {
+      color: #dc3545 !important;
+      border: 2px solid #dc3545 !important;
+      background-color: transparent !important;
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .btn-cerrar-sesion:hover {
+      background-color: #dc3545 !important;
+      color: white !important;
+      transform: translateY(-2px);
+    }
+
+    /* TARJETAS CON IMÁGENES */
+    .medidor {
+      background: white;
+      border: none;
+      border-radius: 15px;
+      overflow: hidden; /* Para que la imagen respete las esquinas redondeadas */
+      transition: all 0.3s ease;
+      border-top: 5px solid var(--azul-gestu);
+      width: 280px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    .medidor:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 12px 25px rgba(0,0,0,0.1) !important;
+    }
+
+    .img-modulo {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+    }
+
+    .card-body-custom {
+      padding: 20px;
+      text-align: center;
+    }
+
+    .btn-ir {
+      background-color: var(--azul-gestu);
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 8px;
+      font-weight: bold;
+      width: 100%;
+      transition: 0.3s;
+    }
+
+    .btn-ir:hover {
+      background-color: #083d6d;
+      color: white;
+    }
+  </style>
 </head>
 
 <body>
 
-<header>
-  <img src="logo.png" height="40">
+<header class="bg-white shadow-sm py-3 mb-4 sticky-top">
+  <div class="container d-flex justify-content-between align-items-center">
+    <!-- Logo -->
+    <img src="img/logo.png" alt="Logo GESTUEDU" height="65" class="animate__animated animate__fadeInLeft">
 
-  <nav>
-    <a href="index.html" class="btn-azul">Inicio</a>
-    <a href="modulos.html" class="btn-azul">Módulos</a>
-    <a href="conocenos.html" class="btn-azul">Conócenos</a>
-    <a href="contacto.html" class="btn-azul">Contacto</a>
-  </nav>
+    <nav class="d-none d-md-block">
+      <a href="index.html" class="btn text-azul fw-bold">Inicio</a>
+      <a href="modulos.html" class="btn text-azul">Módulos</a>
+      <a href="conocenos.html" class="btn text-azul">Conócenos</a>
+      <a href="contacto.html" class="btn text-azul">Contacto</a>
+    </nav>
 
-  <div class="user" id="userSection"></div>
+    <div id="userSection" class="animate__animated animate__fadeInRight">
+      <!-- Se llena con JS -->
+    </div>
+  </div>
 </header>
 
-<div class="container">
+<main class="container">
+  <h2 class="text-center fw-bold text-azul mb-5 animate__animated animate__fadeInDown">Panel de Gestión</h2>
 
-  <h2 style="text-align:center;">Selecciona un módulo</h2>
+  <div class="d-flex gap-4 justify-content-center flex-wrap animate__animated animate__fadeInUp">
 
-  <div style="display:flex; gap:30px; justify-content:center; margin-top:40px; flex-wrap:wrap;">
+    <!-- ESTUDIANTES -->
+    <div class="medidor">
+      <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=400&q=80" class="img-modulo" alt="Estudiantes">
+      <div class="card-body-custom">
+        <h5 class="fw-bold text-azul">Estudiantes</h5>
+        <p class="text-muted small">Registro y seguimiento de alumnos.</p>
+        <button onclick="ir('estudiantes.html')" class="btn-ir">Acceder</button>
+      </div>
+    </div>
 
-<!-- ESTUDIANTES -->
-<div class="medidor" style="width:250px; text-align:center;">
-  <h3>Estudiantes</h3>
-  <p>Gestiona estudiantes (CRUD completo)</p>
-  <button onclick="ir('estudiantes.html')" class="selector">
-    Ir
-  </button>
-</div>
+    <!-- MATERIAS -->
+    <div class="medidor" style="border-top-color: var(--naranja-gestu);">
+      <img src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=400&q=80" class="img-modulo" alt="Materias">
+      <div class="card-body-custom">
+        <h5 class="fw-bold" style="color: var(--naranja-gestu);">Materias</h5>
+        <p class="text-muted small">Plan de estudios y asignaturas.</p>
+        <button onclick="ir('materias.html')" class="btn-ir" style="background-color: var(--naranja-gestu);">Acceder</button>
+      </div>
+    </div>
 
-<!-- CURSOS -->
-<div class="medidor" style="width:250px; text-align:center;">
-  <h3>Materias</h3>
-  <p>Gestiona materias</p>
-  <button onclick="ir('materias.html')" class="selector">
-    Ir
-  </button>
-</div>
+    <!-- GRUPOS -->
+    <div class="medidor">
+      <img src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=400&q=80" class="img-modulo" alt="Grupos">
+      <div class="card-body-custom">
+        <h5 class="fw-bold text-azul">Grupos</h5>
+        <p class="text-muted small">Salones y secciones académicas.</p>
+        <button onclick="ir('grupos.html')" class="btn-ir">Acceder</button>
+      </div>
+    </div>
 
-<!-- GRUPOS -->
-<div class="medidor" style="width:250px; text-align:center;">
-  <h3>Grupos</h3>
-  <p>Año, semestre y sección</p>
-  <button onclick="ir('grupos.html')" class="selector">
-    Ir
-  </button>
-</div>
+    <!-- ASIGNACIONES -->
+    <div class="medidor" style="border-top-color: var(--naranja-gestu);">
+      <img src="https://images.unsplash.com/photo-1544531585-9847b68c8c86?auto=format&fit=crop&w=400&q=80" class="img-modulo" alt="Asignaciones">
+      <div class="card-body-custom">
+        <h5 class="fw-bold" style="color: var(--naranja-gestu);">Asignaciones</h5>
+        <p class="text-muted small">Carga académica de docentes.</p>
+        <button onclick="ir('asignaciones.html')" class="btn-ir" style="background-color: var(--naranja-gestu);">Acceder</button>
+      </div>
+    </div>
 
-<!-- ASIGNACIONES -->
-<div class="medidor" style="width:250px; text-align:center;">
-  <h3>Asignaciones</h3>
-  <p>Estudiantes, materias y profesores</p>
-  <button onclick="ir('asignaciones.html')" class="selector">
-    Ir
-  </button>
-</div>
+    <!-- NOTAS -->
+    <div class="medidor">
+      <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=400&q=80" class="img-modulo" alt="Notas">
+      <div class="card-body-custom">
+        <h5 class="fw-bold text-azul">Notas</h5>
+        <p class="text-muted small">Calificaciones y reportes finales.</p>
+        <button onclick="ir('notas.html')" class="btn-ir">Acceder</button>
+      </div>
+    </div>
 
-<!-- NOTAS -->
-<div class="medidor" style="width:250px; text-align:center;">
-  <h3>Notas</h3>
-  <p>Gestiona calificaciones</p>
-  <button onclick="ir('notas.html')" class="selector">
-    Ir
-  </button>
-</div>
-
-<!-- USUARIOS -->
-<div class="medidor" style="width:250px; text-align:center;">
-  <h3>Usuarios</h3>
-  <p>Gestiona usuarios del sistema</p>
-  <button onclick="ir('usuarios.html')" class="selector">
-    Ir
-  </button>
-</div>
+    <!-- USUARIOS -->
+    <div class="medidor">
+      <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=400&q=80" class="img-modulo" alt="Usuarios">
+      <div class="card-body-custom">
+        <h5 class="fw-bold text-azul">Usuarios</h5>
+        <p class="text-muted small">Administración de accesos.</p>
+        <button onclick="ir('usuarios.html')" class="btn-ir">Acceder</button>
+      </div>
+    </div>
 
   </div>
+</main>
 
-</div>
-
-<footer>
-  © 2026 GESTUEDU — Proyecto SENA
+<footer class="bg-azul text-white text-center py-4 mt-5" style="background-color: var(--azul-gestu) !important;">
+  <div class="container">
+    <p class="mb-0 fw-bold">© 2026 GESTUEDU — Proyecto SENA ADSO</p>
+  </div>
 </footer>
 
 <script>
+// LÓGICA DE LOGIN COMENTADA PARA PRUEBAS
+/*
 const token = localStorage.getItem("token");
-const userSection = document.getElementById("userSection");
-
-// 🔒 PROTEGER
 if (!token) {
-  window.location.href = "login.html";
+    window.location.href = "login.html";
 }
+*/
 
-// 🔥 HEADER DINÁMICO
-userSection.innerHTML = `
-  <button onclick="logout()" class="btn-azul">Cerrar Sesión</button>
+// Forzar el botón de Cerrar Sesión Rojo
+document.getElementById("userSection").innerHTML = `
+  <button onclick="logout()" class="btn-cerrar-sesion shadow-sm">Cerrar Sesión</button>
 `;
 
-// 🚀 IR A MÓDULO
-function ir(pagina) {
-  window.location.href = pagina;
-}
+function ir(pagina) { window.location.href = pagina; }
 
-// 🔒 LOGOUT
 function logout() {
-  localStorage.removeItem("token");
-  window.location.href = "login.html";
+    localStorage.removeItem("token");
+    window.location.href = "login.html";
 }
 </script>
 
