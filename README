@@ -1,0 +1,195 @@
+GESTUEDU
+
+Sistema de Gestión Educativa desarrollado como proyecto académico ADSO SENA.
+GESTUEDU permite administrar estudiantes, cursos, grupos y usuarios mediante una aplicación web moderna conectada a una API REST.
+
+Descripción
+
+GESTUEDU es una plataforma enfocada en la gestión académica de instituciones educativas.
+
+El sistema permite:
+
+Registro e inicio de sesión de usuarios
+Gestión de estudiantes
+Administración de cursos
+Administración de grupos
+Control de roles:
+Administrador
+Profesor
+Estudiante
+Consumo de API REST con autenticación JWT
+Interfaz moderna desarrollada con HTML, CSS, Bootstrap y JavaScript
+Tecnologías Utilizadas
+Frontend
+HTML5
+CSS3
+Bootstrap 5
+JavaScript Vanilla
+Animate.css
+Backend
+Node.js
+Express.js
+JWT
+bcryptjs
+dotenv
+Base de Datos
+MySQL
+mysql2
+Herramientas
+Git
+GitHub
+DBeaver
+Postman
+VS Code
+
+Arquitectura del Proyecto
+
+gestuedu/
+│
+├── frontend/
+│   ├── index.html
+│   ├── login.html
+│   ├── register.html
+│   ├── estudiantes.html
+│   ├── cursos.html
+│   ├── grupos.html
+│   ├── css/
+│   ├── js/
+│   └── img/
+│
+├── backend/
+│   ├── src/
+│   │   ├── config/
+│   │   ├── controllers/
+│   │   ├── middleware/
+│   │   ├── routes/
+│   │   ├── services/
+│   │   ├── app.js
+│   │   └── .env
+│   │
+│   ├── package.json
+│   └── README.md
+│
+└── database/
+    └── gestuedu.sql
+
+Funcionalidades
+
+Autenticación
+Registro de usuarios
+Inicio de sesión
+Protección mediante JWT
+Persistencia de sesión con localStorage
+Gestión de Estudiantes
+Crear estudiantes
+Editar estudiantes
+Eliminar estudiantes
+Listar estudiantes
+Gestión de Cursos
+Crear cursos
+Editar cursos
+Eliminar cursos
+Asignación académica
+Gestión de Grupos
+Crear grupos
+Administración de estudiantes por grupo
+Roles del Sistema
+Rol	Permisos
+Admin	Acceso total
+Profesor	Gestión académica
+Estudiante	Consulta de información
+Instalación
+1. Clonar repositorio
+git clone https://github.com/tuusuario/gestuedu.git
+2. Entrar al proyecto
+cd gestuedu
+Configuración Backend
+Instalar dependencias
+npm install
+Configurar variables de entorno
+
+Crear archivo .env
+
+PORT=3000
+
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=
+DB_NAME=gestuedu
+
+JWT_SECRET=gestuedu_secret
+Ejecutar servidor
+node src/app.js
+
+Servidor:
+
+http://localhost:3000
+Configuración Base de Datos
+Crear base de datos
+CREATE DATABASE gestuedu;
+Importar script SQL
+
+Importar:
+
+gestuedu.sql
+
+desde DBeaver o MySQL Workbench.
+
+Endpoints API
+Auth
+Método	Endpoint
+POST	/api/auth/register
+POST	/api/auth/login
+Estudiantes
+Método	Endpoint
+GET	/api/estudiantes
+POST	/api/estudiantes
+PUT	/api/estudiantes/:id
+DELETE	/api/estudiantes/:id
+Cursos
+Método	Endpoint
+GET	/api/cursos
+POST	/api/cursos
+PUT	/api/cursos/:id
+DELETE	/api/cursos/:id
+Seguridad
+
+GESTUEDU implementa:
+
+Hash de contraseñas con bcrypt
+JWT para autenticación
+Middleware de autorización
+Validación de rutas protegidas
+Capturas del Sistema
+Login
+Diseño moderno responsive
+Validación de acceso
+Panel Administrativo
+CRUD dinámico
+Gestión académica
+Registro
+Roles de usuario
+Formularios validados
+Estado del Proyecto
+
+Proyecto académico en desarrollo.
+
+Próximas mejoras:
+
+Dashboard con estadísticas
+Responsive avanzado
+Migración a React
+Notificaciones
+Sistema de notas
+Asistencia
+Recuperación de contraseña
+Autor
+
+Proyecto desarrollado por:
+
+Raynex XD
+ADSO — SENA
+
+Licencia
+
+Proyecto educativo desarrollado con fines académicos.

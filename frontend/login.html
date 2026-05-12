@@ -25,10 +25,16 @@ body{
   background:var(--fondo-gestu);
   font-family:'Segoe UI',sans-serif;
   min-height:100vh;
+
   display:flex;
   align-items:center;
   justify-content:center;
-  overflow:hidden;
+
+  overflow-x:hidden;
+  overflow-y:auto;
+
+  position:relative;
+  padding:30px 15px;
 }
 
 /* FONDO DECORATIVO */
@@ -155,6 +161,38 @@ body::after{
 .subtexto{
   color:#777;
   margin-bottom:25px;
+}
+
+/* SCROLL PERSONALIZADO */
+::-webkit-scrollbar{
+  width:10px;
+}
+
+::-webkit-scrollbar-track{
+  background:#e9ecef;
+  border-radius:10px;
+}
+
+::-webkit-scrollbar-thumb{
+  background:var(--azul-gestu);
+  border-radius:10px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+  background:#083d6d;
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+
+  .login-body{
+    padding:25px;
+  }
+
+  .login-header img{
+    height:180px;
+  }
+
 }
 
 </style>

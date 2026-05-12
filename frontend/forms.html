@@ -25,10 +25,14 @@ body{
   background:var(--fondo-gestu);
   font-family:'Segoe UI',sans-serif;
   min-height:100vh;
+
   display:flex;
   align-items:center;
   justify-content:center;
+
   overflow-x:hidden;
+  overflow-y:auto;
+
   position:relative;
   padding:30px 15px;
 }
@@ -219,6 +223,25 @@ button:hover{
     height:60px;
   }
 
+}
+
+/* SCROLL PERSONALIZADO */
+::-webkit-scrollbar{
+  width:10px;
+}
+
+::-webkit-scrollbar-track{
+  background:#e9ecef;
+  border-radius:10px;
+}
+
+::-webkit-scrollbar-thumb{
+  background:var(--azul-gestu);
+  border-radius:10px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+  background:#083d6d;
 }
 
 </style>
