@@ -2,92 +2,449 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Materias - GESTUEDU</title>
-<link rel="stylesheet" href="estilos.css">
+
+<!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Animate -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+<style>
+
+:root{
+  --azul-gestu:#0B5394;
+  --naranja-gestu:#FF9900;
+  --fondo-gestu:#F7FAEF;
+}
+
+body{
+  background: var(--fondo-gestu);
+  font-family:'Segoe UI',sans-serif;
+}
+
+/* NAVBAR */
+header{
+  background:white;
+  padding:15px 40px;
+  box-shadow:0 2px 10px rgba(0,0,0,0.05);
+
+  position:sticky;
+  top:0;
+  z-index:1000;
+}
+
+.text-azul{
+  color:var(--azul-gestu)!important;
+}
+
+.btn-azul{
+  background:transparent;
+  border:2px solid #dc3545;
+  color:#dc3545;
+  padding:10px 25px;
+  border-radius:12px;
+  font-weight:600;
+  transition:0.3s;
+}
+
+.btn-azul:hover{
+  background:#dc3545;
+  color:white;
+}
+
+/* TITULOS */
+h2{
+  color:var(--azul-gestu);
+  font-weight:700;
+  margin-top:40px;
+  margin-bottom:30px;
+}
+
+/* CARD */
+.medidor{
+  background:white;
+  border:none;
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:0 8px 20px rgba(0,0,0,0.08);
+  transition:all 0.3s ease;
+  margin-bottom:40px;
+  border-top:5px solid var(--naranja-gestu);
+}
+
+.medidor:hover{
+  transform:translateY(-5px) scale(1.01);
+}
+
+.medidor h3{
+  color:var(--naranja-gestu);
+  margin-bottom:25px;
+  font-weight:700;
+}
+
+/* IMAGEN */
+.img-header-card{
+  width:100%;
+  height:140px;
+  object-fit:cover;
+}
+
+/* BODY CARD */
+.card-body-custom{
+  padding:30px;
+}
+
+/* INPUTS */
+.medidor input{
+  width:100%;
+  height:50px;
+  border-radius:12px;
+  border:1px solid #ddd;
+  padding:10px;
+  outline:none;
+}
+
+.medidor input:focus{
+  border-color:var(--naranja-gestu);
+  box-shadow:0 0 0 3px rgba(255,153,0,0.1);
+}
+
+/* BOTONES */
+button{
+  border:none;
+  padding:10px 18px;
+  border-radius:10px;
+  font-weight:600;
+  transition:0.3s;
+}
+
+button:hover{
+  transform:translateY(-2px);
+}
+
+/* BOTON PRINCIPAL */
+.btn-gestu{
+  background:var(--naranja-gestu);
+  color:white;
+  height:50px;
+  border-radius:12px;
+  font-weight:600;
+  width:100%;
+}
+
+.btn-gestu:hover{
+  background:#e68900;
+  color:white;
+}
+
+/* CONTENEDOR TABLA */
+.table-container{
+  background:white;
+  border-radius:18px;
+  padding:20px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.08);
+}
+
+/* TABLA */
+table{
+  background:white;
+  border-radius:15px;
+  overflow:hidden;
+  border-collapse:collapse;
+}
+
+thead{
+  background:var(--azul-gestu);
+  color:white;
+}
+
+th{
+  padding:18px;
+  text-align:center;
+}
+
+td{
+  padding:15px;
+  border-bottom:1px solid #eee;
+}
+
+td input{
+  width:100%;
+  padding:10px;
+  border:1px solid #ddd;
+  border-radius:8px;
+}
+
+td button{
+  margin:2px;
+}
+
+td button:first-child{
+  background:#ffc107;
+}
+
+td button:last-child{
+  background:#dc3545;
+  color:white;
+}
+
+.container{
+  margin-top:40px;
+  margin-bottom:50px;
+}
+
+</style>
 </head>
+
 <body>
+
 <header>
-  <img src="logo.png" height="40">
-  <nav>
-    <a href="modulos.html" class="btn-azul">Módulos</a>
-    <a href="grupos.html" class="btn-azul">Grupos</a>
-    <a href="asignaciones.html" class="btn-azul">Asignaciones</a>
-    <a href="notas.html" class="btn-azul">Notas</a>
-  </nav>
-  <button onclick="logout()" class="btn-azul">Cerrar Sesión</button>
+
+  <div class="container d-flex justify-content-between align-items-center">
+
+    <!-- Logo -->
+    <img src="img/logo.png"
+         alt="Logo GESTUEDU"
+         height="65"
+         class="animate__animated animate__fadeInLeft">
+
+    <nav class="d-none d-md-block">
+      <a href="index.html" class="btn text-azul fw-bold">Inicio</a>
+      <a href="modulos.html" class="btn text-azul">Módulos</a>
+      <a href="conocenos.html" class="btn text-azul">Conócenos</a>
+      <a href="contacto.html" class="btn text-azul">Contacto</a>
+    </nav>
+
+    <button onclick="logout()" class="btn-azul">
+      Cerrar Sesión
+    </button>
+
+  </div>
+
 </header>
 
 <div class="container">
-  <h2>Gestión de Materias</h2>
-  <div class="medidor">
-    <h3>Crear Materia</h3>
-    <input id="nombre" placeholder="Nombre">
-    <input id="descripcion" placeholder="Descripción">
-    <button onclick="crear()">Crear</button>
-  </div>
 
-  <table width="100%">
+<h2 class="text-center animate__animated animate__bounceIn">
+   Gestión de Materias
+</h2>
+
+<!-- CARD -->
+<div class="medidor animate__animated animate__fadeInUp">
+
+    <!-- Imagen -->
+    <img 
+      src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=1200&q=80"
+      class="img-header-card"
+      alt="Materias">
+
+    <!-- CONTENIDO -->
+    <div class="card-body-custom">
+
+        <h3 class="fw-bold mb-4">
+            Crear Materia
+        </h3>
+
+        <div class="row g-3 align-items-center">
+
+            <div class="col">
+                <input id="nombre"
+                       placeholder="Nombre">
+            </div>
+
+            <div class="col">
+                <input id="descripcion"
+                       placeholder="Descripción">
+            </div>
+
+            <div style="width:140px;">
+                <button onclick="crear()"
+                        class="btn btn-gestu w-100">
+                    Crear
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- TABLA -->
+<div class="table-container animate__animated animate__fadeInUp">
+
+<table class="table align-middle">
+
     <thead>
-      <tr><th>Nombre</th><th>Descripción</th><th>Acciones</th></tr>
+      <tr>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Acciones</th>
+      </tr>
     </thead>
+
     <tbody id="tabla"></tbody>
-  </table>
+
+</table>
+
+</div>
+
 </div>
 
 <script>
+
 const API = "http://localhost:3000/api/academico/materias";
 const token = localStorage.getItem("token");
-if (!token) window.location.href = "login.html";
 
+if (!token) {
+  window.location.href = "login.html";
+}
+
+// ======================
+// LISTAR
+// ======================
 async function cargar() {
-  const res = await fetch(API, { headers: { Authorization: "Bearer " + token } });
+
+  const res = await fetch(API, {
+    headers: {
+      Authorization: "Bearer " + token
+    }
+  });
+
   const data = await res.json();
+
   tabla.innerHTML = "";
+
   data.forEach(m => {
+
     tabla.innerHTML += `
       <tr>
-        <td><input id="n${m.id}" value="${m.nombre}"></td>
-        <td><input id="d${m.id}" value="${m.descripcion || ""}"></td>
+
         <td>
-          <button onclick="editar(${m.id})">Editar</button>
-          <button onclick="eliminar(${m.id})">Eliminar</button>
+          <input id="n${m.id}" value="${m.nombre}">
         </td>
-      </tr>`;
+
+        <td>
+          <input id="d${m.id}" value="${m.descripcion || ""}">
+        </td>
+
+        <td>
+          <button onclick="editar(${m.id})">
+            ✏️
+          </button>
+
+          <button onclick="eliminar(${m.id})">
+            ❌
+          </button>
+        </td>
+
+      </tr>
+    `;
   });
 }
 
+// ======================
+// CREAR
+// ======================
 async function crear() {
-  const data = { nombre: nombre.value, descripcion: descripcion.value };
+
+  const data = {
+    nombre: nombre.value,
+    descripcion: descripcion.value
+  };
+
   const res = await fetch(API, {
     method: "POST",
-    headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
+    },
     body: JSON.stringify(data)
   });
+
   const r = await res.json();
-  if (res.ok) { alert("Materia creada"); nombre.value = ""; descripcion.value = ""; cargar(); }
-  else alert(r.error);
+
+  if (res.ok) {
+
+    alert("Materia creada");
+
+    nombre.value = "";
+    descripcion.value = "";
+
+    cargar();
+
+  } else {
+    alert(r.error);
+  }
 }
 
+// ======================
+// EDITAR
+// ======================
 async function editar(id) {
-  const data = { nombre: document.getElementById("n" + id).value, descripcion: document.getElementById("d" + id).value };
+
+  const data = {
+    nombre: document.getElementById("n" + id).value,
+    descripcion: document.getElementById("d" + id).value
+  };
+
   const res = await fetch(API + "/" + id, {
     method: "PUT",
-    headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
+    },
     body: JSON.stringify(data)
   });
+
   const r = await res.json();
-  if (res.ok) { alert("Materia actualizada"); cargar(); } else alert(r.error);
+
+  if (res.ok) {
+    alert("Materia actualizada");
+    cargar();
+  } else {
+    alert(r.error);
+  }
 }
 
+// ======================
+// ELIMINAR
+// ======================
 async function eliminar(id) {
+
   if (!confirm("¿Eliminar materia?")) return;
-  const res = await fetch(API + "/" + id, { method: "DELETE", headers: { Authorization: "Bearer " + token } });
+
+  const res = await fetch(API + "/" + id, {
+    method: "DELETE",
+    headers: {
+      Authorization: "Bearer " + token
+    }
+  });
+
   const r = await res.json();
-  if (res.ok) { alert("Materia eliminada"); cargar(); } else alert(r.error);
+
+  if (res.ok) {
+    alert("Materia eliminada");
+    cargar();
+  } else {
+    alert(r.error);
+  }
 }
 
-function logout() { localStorage.removeItem("token"); window.location.href = "login.html"; }
+// ======================
+// LOGOUT
+// ======================
+function logout() {
+  localStorage.removeItem("token");
+  window.location.href = "login.html";
+}
+
 cargar();
+
 </script>
+
 </body>
 </html>

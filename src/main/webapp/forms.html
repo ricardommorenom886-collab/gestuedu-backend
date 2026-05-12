@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+    <link rel="stylesheet" href="estilosforms.css"> <!-- Cerrado correctamente -->
+</head>
+<body>
+<section class="formulario">
+    <h2>Registro de Usuario</h2>
+
+    <!-- Enviará los datos al servlet Java -->
+    <form action="RegistroServlet" method="post">
+    <label for="nombres">Nombres</label>
+        <input type="text" id="nombres" name="nombres" placeholder="Ingresa tu nombre completo" required>
+
+        <label for="apellidos">Apellidos</label>
+        <input type="text" id="apellidos" name="apellidos" placeholder="Ingresa tus apellidos completos" required>
+       
+        <label for="fechaNacimiento">Fecha de nacimiento:</label>
+        <input type="date" id="fechaNacimiento" name="fechaNacimiento" required>
+
+        <label for="tipoDocumento">Tipo de documento:</label>
+        <select id="tipoDocumento" name="tipoDocumento" required>
+            <option value="">Seleccione...</option>
+            <option value="CC">Cédula de ciudadanía</option>
+            <option value="TI">Tarjeta de identidad</option>
+            <option value="CE">Cédula de extranjería</option>
+            <option value="PA">Pasaporte</option>
+            <option value="PPT">Permiso por Protección Temporal</option>
+        </select>
+
+        <label for="numeroDocumento">Número de documento:</label>
+        <input type="text" id="numeroDocumento" name="numeroDocumento" placeholder="Ingrese su número" required>
+
+        <label for="correo">Correo electrónico:</label>
+        <input type="email" id="correo" name="correo" placeholder="ejemplo@correo.com" required>
+
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" name="password" placeholder="Crea una contraseña" required>
+
+        <label for="confirmar">Confirmar contraseña:</label>
+        <input type="password" id="confirmar" name="confirmar" placeholder="Repite la contraseña" required>
+
+        <label for="tipo">Tipo de usuario:</label>
+        <select id="tipo" name="tipo" required>
+            <option value="">Seleccione...</option>
+            <option value="estudiante">Estudiante</option>
+            <option value="docente">Docente</option>
+            <option value="administrador">Administrador</option>
+        </select>
+
+        <button type="submit" class="btn-enviar">Registrar</button>
+        <button type="button" class="btn-cancelar" onclick="window.location.href='index.html'">Cancelar</button>
+    </form>
+</section>
+</body>
+</html>

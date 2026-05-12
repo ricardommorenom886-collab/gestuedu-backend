@@ -2,45 +2,294 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Panel Estudiantes - GESTUEDU</title>
-<link rel="stylesheet" href="estilos.css">
+
+<!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Animate -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+<style>
+
+:root{
+  --azul-gestu:#0B5394;
+  --naranja-gestu:#FF9900;
+  --fondo-gestu:#F7FAEF;
+}
+
+body{
+  background: var(--fondo-gestu);
+  font-family:'Segoe UI',sans-serif;
+}
+
+/* NAVBAR */
+header{
+  background:white;
+  padding:15px 40px;
+  box-shadow:0 2px 10px rgba(0,0,0,0.05);
+
+  position:sticky;
+  top:0;
+  z-index:1000;
+}
+
+.text-azul{
+  color:var(--azul-gestu)!important;
+}
+
+.btn-azul{
+  background:transparent;
+  border:2px solid #dc3545;
+  color:#dc3545;
+  padding:10px 25px;
+  border-radius:12px;
+  font-weight:600;
+  transition:0.3s;
+}
+
+.btn-azul:hover{
+  background:#dc3545;
+  color:white;
+}
+
+/* TITULOS */
+h2{
+  color:var(--azul-gestu);
+  font-weight:700;
+  margin-top:40px;
+  margin-bottom:30px;
+}
+
+/* CARD ESTUDIANTE */
+.medidor{
+  background:white;
+  border:none;
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:0 8px 20px rgba(0,0,0,0.08);
+  transition:all 0.3s ease;
+  margin-bottom:40px;
+  border-top:5px solid var(--azul-gestu);
+}
+
+/* ANIMACION HOVER */
+.medidor:hover{
+  transform:translateY(-5px) scale(1.01);
+}
+
+.medidor h3{
+  color:var(--azul-gestu);
+  margin-bottom:25px;
+  font-weight:700;
+}
+
+/* IMAGEN SUPERIOR */
+.img-header-card{
+  width:100%;
+  height:140px;
+  object-fit:cover;
+}
+
+/* CONTENIDO INTERNO */
+.card-body-custom{
+  padding:30px;
+}
+
+/* INPUTS */
+.medidor input{
+  width:100%;
+  height:50px;
+  border-radius:12px;
+  border:1px solid #ddd;
+  padding:10px;
+  outline:none;
+}
+
+.medidor input:focus{
+  border-color:var(--azul-gestu);
+  box-shadow:0 0 0 3px rgba(11,83,148,0.1);
+}
+
+/* BOTONES GENERALES */
+button{
+  border:none;
+  padding:10px 18px;
+  border-radius:10px;
+  font-weight:600;
+  transition:0.3s;
+}
+
+button:hover{
+  transform:translateY(-2px);
+}
+
+/* BOTON GESTU */
+.btn-gestu{
+  background:var(--azul-gestu);
+  color:white;
+  height:50px;
+  border-radius:12px;
+  font-weight:600;
+  width:100%;
+}
+
+.btn-gestu:hover{
+  background:#083d6d;
+  color:white;
+}
+
+/* CONTENEDOR TABLA */
+.table-container{
+  background:white;
+  border-radius:18px;
+  padding:20px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.08);
+}
+
+/* TABLA */
+table{
+  background:white;
+  border-radius:15px;
+  overflow:hidden;
+  border-collapse:collapse;
+}
+
+thead{
+  background:var(--azul-gestu);
+  color:white;
+}
+
+th{
+  padding:18px;
+  text-align:center;
+}
+
+td{
+  padding:15px;
+  border-bottom:1px solid #eee;
+}
+
+td input{
+  width:100%;
+  padding:10px;
+  border:1px solid #ddd;
+  border-radius:8px;
+}
+
+td button{
+  margin:2px;
+}
+
+td button:first-child{
+  background:#ffc107;
+}
+
+td button:last-child{
+  background:#dc3545;
+  color:white;
+}
+
+.container{
+  margin-top:40px;
+  margin-bottom:50px;
+}
+
+</style>
 </head>
 
 <body>
 
 <header>
-    <img src="logo.png" height="40">
 
-    <nav>
-        <a href="index.html" class="btn-azul">Inicio</a>
-        <a href="modulos.html" class="btn-azul">Módulos</a>
-        <a href="conocenos.html" class="btn-azul">Conócenos</a>
-        <a href="contacto.html" class="btn-azul">Contacto</a>
+  <div class="container d-flex justify-content-between align-items-center">
+    <!-- Logo -->
+    <img src="img/logo.png" alt="Logo GESTUEDU" height="65" class="animate__animated animate__fadeInLeft">
+
+    <nav class="d-none d-md-block">
+      <a href="index.html" class="btn text-azul fw-bold">Inicio</a>
+      <a href="modulos.html" class="btn text-azul">Módulos</a>
+      <a href="conocenos.html" class="btn text-azul">Conócenos</a>
+      <a href="contacto.html" class="btn text-azul">Contacto</a>
     </nav>
 
-    <button onclick="logout()" class="btn-azul">Cerrar Sesión</button>
+    <!-- Logout -->
+    <button onclick="logout()" class="btn-azul">
+      Cerrar Sesión
+    </button>
+
+  </div>
+
 </header>
 
 <div class="container">
 
-<h2>Gestión de Estudiantes</h2>
+<h2 class="text-center animate__animated animate__bounceIn">
+   Gestión de Estudiantes
+</h2>
 
 <!-- 🔥 CREAR -->
-<div class="medidor">
-    <h3>Crear Estudiante</h3>
+<!-- 🔥 CREAR -->
+<div class="medidor animate__animated animate__fadeInUp">
 
-    <input type="text" id="nombre" placeholder="Nombre">
-    <input type="text" id="documento" placeholder="Documento">
-    <input type="email" id="correo" placeholder="Correo">
-    <input type="number" id="edad" placeholder="Edad">
+    <!-- Imagen -->
+    <img 
+      src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80"
+      class="img-header-card"
+      alt="Estudiantes">
 
-    <button onclick="crearEstudiante()">Crear</button>
+    <!-- Contenido -->
+    <div class="card-body-custom">
+
+        <h3 class="fw-bold text-azul mb-4">
+            Crear Estudiante
+        </h3>
+
+        <div class="row g-3 align-items-center">
+
+            <div class="col">
+                <input type="text"
+                       id="nombre"
+                       placeholder="Nombre">
+            </div>
+
+            <div class="col">
+                <input type="text"
+                       id="documento"
+                       placeholder="Documento">
+            </div>
+
+            <div class="col">
+                <input type="email"
+                       id="correo"
+                       placeholder="Correo">
+            </div>
+
+            <div class="col">
+                <input type="number"
+                       id="edad"
+                       placeholder="Edad">
+            </div>
+
+            <div style="width:140px;">
+                <button onclick="crearEstudiante()"
+                        class="btn btn-gestu w-100">
+                    Crear
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
 </div>
 
-<hr>
-
 <!-- 🔥 TABLA -->
-<table border="1" width="100%">
+<div class="table-container animate__animated animate__fadeInUp">
+
+<table class="table align-middle">
     <thead>
         <tr>
             <th>Nombre</th>
@@ -53,7 +302,7 @@
 
     <tbody id="tabla"></tbody>
 </table>
-
+</div>
 </div>
 
 <script>

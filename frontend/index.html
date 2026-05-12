@@ -4,99 +4,200 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Inicio - GESTUEDU</title>
-  <link rel="stylesheet" href="estilos.css">
+  
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Animate.css para las animaciones -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+  <style>
+    /* TU PALETA DE COLORES */
+    :root {
+      --azul-gestu: #0B5394;
+      --naranja-gestu: #FF9900;
+      --fondo-gestu: #F7FAEF;
+    }
+
+    body {
+      background-color: var(--fondo-gestu);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .text-azul { color: var(--azul-gestu) !important; }
+    .bg-azul { background-color: var(--azul-gestu) !important; }
+    
+    .btn-gestu {
+      background-color: var(--azul-gestu);
+      color: white;
+      border: none;
+      padding: 10px 25px;
+      transition: all 0.3s ease;
+    }
+    .btn-gestu:hover {
+      background-color: #083d6d;
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(11, 83, 148, 0.3);
+    }
+
+    /* Estilo de Tarjetas con Imagen */
+    .card-modulo {
+      border: none;
+      border-radius: 15px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      background: white;
+    }
+    .card-modulo:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 12px 25px rgba(0,0,0,0.1) !important;
+    }
+    .img-card {
+      height: 160px;
+      object-fit: cover;
+    }
+
+    /* Barra de estadísticas */
+    .stat-box {
+      background: white;
+      border-bottom: 4px solid var(--naranja-gestu);
+      border-radius: 10px;
+      padding: 20px;
+    }
+  </style>
 </head>
 
 <body>
 
-<header>
-  <img src="logo.png" alt="Logo GESTUEDU" height="40">
+<header class="bg-white shadow-sm py-3 mb-4 sticky-top">
+  <div class="container d-flex justify-content-between align-items-center">
+    <!-- Logo -->
+    <img src="img/logo.png" alt="Logo GESTUEDU" height="65" class="animate__animated animate__fadeInLeft">
 
-  <nav>
-    <a href="index.html" class="btn-azul">Inicio</a>
-    <a href="modulos.html" class="btn-azul">Módulos</a>
-    <a href="conocenos.html" class="btn-azul">Conócenos</a>
-    <a href="contacto.html" class="btn-azul">Contacto</a>
-  </nav>
+    <nav class="d-none d-md-block">
+      <a href="index.html" class="btn text-azul fw-bold">Inicio</a>
+      <a href="modulos.html" class="btn text-azul">Módulos</a>
+      <a href="conocenos.html" class="btn text-azul">Conócenos</a>
+      <a href="contacto.html" class="btn text-azul">Contacto</a>
+    </nav>
 
-  <div class="user" id="userSection">
-    <!-- SE LLENA CON JS -->
+    <div id="userSection" class="animate__animated animate__fadeInRight">
+      <!-- Se llena con JS -->
+    </div>
   </div>
 </header>
 
-<div class="container">
+<main class="container">
     
-  <div class="medidor" style="text-align: center; padding: 50px 20px;">
-    <div class="section-title" style="font-size: 2.5rem; margin-bottom: 20px;">
-      Bienvenido a GESTUEDU
+  <!-- Hero Section con Animación de Zoom -->
+  <section class="row align-items-center py-5 mb-5">
+    <div class="col-lg-6 animate__animated animate__fadeInLeft">
+      <h1 class="display-4 fw-bold text-azul mb-3">Bienvenido a GESTUEDU</h1>
+      <p class="lead text-muted mb-4">
+        La herramienta definitiva para la gestión académica, diseñada para potenciar el aprendizaje y la organización institucional.
+      </p>
+      <button onclick="irModulos()" class="btn btn-gestu btn-lg shadow">Explorar Sistema</button>
     </div>
+    <div class="col-lg-6 animate__animated animate__zoomIn">
+        <!-- Imagen alusiva a gestión escolar -->
+        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=600&q=80" 
+             alt="Gestión Escolar" class="img-fluid rounded-4 shadow-lg">
+    </div>
+  </section>
 
-    <p style="font-size: 1.2rem; color: #555; max-width: 800px; margin: 0 auto 30px;">
-      Plataforma de gestión escolar para estudiantes, docentes y administradores.
-    </p>
+  <!-- Estadísticas con Animación FadeInUp -->
+  <div class="row text-center g-4 mb-5 animate__animated animate__fadeInUp">
+    <div class="col-6 col-md-3">
+      <div class="stat-box shadow-sm">
+        <h3 class="fw-bold text-azul">+500</h3>
+        <small class="text-muted">Instituciones</small>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="stat-box shadow-sm">
+        <h3 class="fw-bold text-azul">+10k</h3>
+        <small class="text-muted">Estudiantes</small>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="stat-box shadow-sm">
+        <h3 class="fw-bold" style="color: var(--naranja-gestu);">4.9/5</h3>
+        <small class="text-muted">Calificación</small>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="stat-box shadow-sm">
+        <h3 class="fw-bold text-azul">2026-1</h3>
+        <small class="text-muted">Periodo Actual</small>
+      </div>
+    </div>
   </div>
 
-  <div class="barra-informacion">
-    <span>🚀 +500 Instituciones</span>
-    <span>👥 +10,000 Estudiantes</span>
-    <span>⭐ Calificación: <span class="promedio">4.9/5</span></span>
-    <span>📅 Periodo Actual: 2025-1</span>
-  </div>
+  <h2 class="text-center mb-5 fw-bold text-azul">Nuestros Módulos Principales</h2>
 
-  <div class="section-title" style="margin-top: 40px; text-align: center;">
-    Nuestros Módulos
-  </div>
-
-  <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-top: 20px;">
+  <!-- Módulos con Animaciones Individuales -->
+  <div class="row g-4 mb-5">
     
-    <div class="medidor" style="flex: 1; min-width: 280px;">
-      <div class="resalt">Calificaciones</div>
-      <p>Consulta notas y rendimiento académico.</p>
+    <div class="col-md-4 animate__animated animate__fadeInUp" style="animation-delay: 0.1s;">
+      <div class="card h-100 card-modulo shadow-sm">
+        <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=400&q=80" class="img-card" alt="Calificaciones">
+        <div class="card-body text-center">
+          <h4 class="fw-bold text-azul">Calificaciones</h4>
+          <p class="text-muted small">Visualiza el progreso académico y boletines digitales al instante.</p>
+        </div>
+      </div>
     </div>
 
-    <div class="medidor" style="flex: 1; min-width: 280px;">
-      <div class="resalt" style="background-color: #FF9900;">Asistencia</div>
-      <p>Control de asistencia y reportes.</p>
+    <div class="col-md-4 animate__animated animate__fadeInUp" style="animation-delay: 0.3s;">
+      <div class="card h-100 card-modulo shadow-sm" style="border-top: 5px solid var(--naranja-gestu);">
+        <img src="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&w=400&q=80" class="img-card" alt="Asistencia">
+        <div class="card-body text-center">
+          <h4 class="fw-bold" style="color: var(--naranja-gestu);">Grupos</h4>
+          <p class="text-muted small">Administre grupos académicos, períodos y secciones de forma organizada y eficiente.</p>
+        </div>
+      </div>
     </div>
 
-    <div class="medidor" style="flex: 1; min-width: 280px;">
-      <div class="resalt">Convivencia</div>
-      <p>Seguimiento académico y disciplinario.</p>
+    <div class="col-md-4 animate__animated animate__fadeInUp" style="animation-delay: 0.5s;">
+      <div class="card h-100 card-modulo shadow-sm">
+        <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=400&q=80" class="img-card" alt="Convivencia">
+        <div class="card-body text-center">
+          <h4 class="fw-bold text-azul">asignaciones</h4>
+          <p class="text-muted small">Vincule estudiantes a grupos académicos de manera rápida y organizada.</p>
+        </div>
+      </div>
     </div>
 
   </div>
 
-</div>
+</main>
 
-<footer>
-  © 2025 GESTUEDU — Proyecto SENA ADSO
+<footer class="bg-azul text-white text-center py-4 mt-5">
+  <div class="container">
+    <p class="mb-0 fw-bold">© 2026 GESTUEDU — Proyecto SENA ADSO</p>
+    <small style="opacity: 0.8;">Innovación Educativa para el Siglo XXI</small>
+  </div>
 </footer>
 
 <script>
+// Lógica de usuario
 const token = localStorage.getItem("token");
 const userSection = document.getElementById("userSection");
 
-// 🔥 CAMBIAR HEADER SEGÚN LOGIN
 if (token) {
-    userSection.innerHTML = `
-        <button onclick="logout()" class="btn-azul">Cerrar Sesión</button>
-    `;
+    userSection.innerHTML = `<button onclick="logout()" class="btn btn-light text-azul fw-bold shadow-sm">Cerrar Sesión</button>`;
 } else {
-    userSection.innerHTML = `
-        <a href="login.html" class="btn-azul">Iniciar Sesión</a>
-    `;
+    userSection.innerHTML = `<a href="login.html" class="btn btn-gestu px-4 shadow-sm">Iniciar Sesión</a>`;
 }
 
-// 🔒 LOGOUT
 function logout() {
     localStorage.removeItem("token");
     window.location.href = "login.html";
 }
 
-// 🚀 IR A MÓDULOS
 function irModulos() {
     if (!token) {
-        alert("Debes iniciar sesión");
+        alert("Por favor, inicia sesión para acceder.");
         window.location.href = "login.html";
     } else {
         window.location.href = "modulos.html";

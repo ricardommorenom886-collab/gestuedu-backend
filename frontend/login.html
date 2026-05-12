@@ -1,33 +1,227 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Login - GESTUEDU</title>
-    <link rel="stylesheet" href="login.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Login - GESTUEDU</title>
+
+<!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Animate -->
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+<style>
+
+:root{
+  --azul-gestu:#0B5394;
+  --naranja-gestu:#FF9900;
+  --fondo-gestu:#F7FAEF;
+}
+
+body{
+  background:var(--fondo-gestu);
+  font-family:'Segoe UI',sans-serif;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+
+/* FONDO DECORATIVO */
+body::before{
+  content:"";
+  position:absolute;
+  width:500px;
+  height:500px;
+  background:rgba(11,83,148,0.08);
+  border-radius:50%;
+  top:-200px;
+  left:-150px;
+}
+
+body::after{
+  content:"";
+  position:absolute;
+  width:400px;
+  height:400px;
+  background:rgba(255,153,0,0.08);
+  border-radius:50%;
+  bottom:-180px;
+  right:-120px;
+}
+
+/* CARD LOGIN */
+.login-box{
+  position:relative;
+  z-index:2;
+
+  width:100%;
+  max-width:450px;
+
+  background:white;
+  border-radius:25px;
+  overflow:hidden;
+
+  box-shadow:0 15px 35px rgba(0,0,0,0.12);
+
+  animation:fadeInUp 1s;
+}
+
+/* IMAGEN SUPERIOR */
+.login-header img{
+  width:100%;
+  height:220px;
+  object-fit:cover;
+}
+
+/* CONTENIDO */
+.login-body{
+  padding:40px;
+}
+
+.logo{
+  width:90px;
+  margin-top:-80px;
+  margin-bottom:15px;
+  border-radius:20px;
+  border:5px solid white;
+  background:white;
+  box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* TITULO */
+.login-body h2{
+  color:var(--azul-gestu);
+  font-weight:700;
+  margin-bottom:30px;
+}
+
+/* INPUTS */
+.form-control{
+  height:55px;
+  border-radius:14px;
+  border:1px solid #ddd;
+  padding-left:15px;
+  margin-bottom:20px;
+  transition:0.3s;
+}
+
+.form-control:focus{
+  border-color:var(--azul-gestu);
+  box-shadow:0 0 0 4px rgba(11,83,148,0.1);
+}
+
+/* BOTON */
+.btn-gestu{
+  background:var(--azul-gestu);
+  color:white;
+  border:none;
+  width:100%;
+  height:55px;
+  border-radius:14px;
+  font-weight:600;
+  font-size:17px;
+  transition:0.3s;
+}
+
+.btn-gestu:hover{
+  background:#083d6d;
+  transform:translateY(-2px);
+  box-shadow:0 8px 20px rgba(11,83,148,0.3);
+  color:white;
+}
+
+/* TEXTO */
+.login-footer{
+  margin-top:25px;
+  text-align:center;
+}
+
+.login-footer a{
+  color:var(--naranja-gestu);
+  font-weight:700;
+  text-decoration:none;
+}
+
+.login-footer a:hover{
+  text-decoration:underline;
+}
+
+/* TEXTO PEQUEÑO */
+.subtexto{
+  color:#777;
+  margin-bottom:25px;
+}
+
+</style>
 </head>
+
 <body>
 
-<section class="contenedor-login">
-    <div class="login-caja">
-        <h2>Iniciar Sesión</h2>
+<div class="login-box animate__animated animate__fadeInUp">
 
-        <form onsubmit="handleLogin(event)">
-            <input type="email" id="correo" placeholder="Correo" required>
-            <input type="password" id="clave" placeholder="Contraseña" required>
+<!-- IMAGEN -->
+<div class="login-header">
+  <img
+    src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80"
+    alt="Login GESTUEDU">
+</div>
 
-            <button type="submit">Ingresar</button>
-        </form>
+<!-- CONTENIDO -->
+<div class="login-body text-center">
 
-        <p>
-            ¿No tienes cuenta?
-            <a href="forms.html">Regístrate</a>
-        </p>
-    </div>
-</section>
+    <!-- Logo -->
+    <img src="img/logo.png" alt="Logo GESTUEDU" height="65" class="animate__animated animate__fadeInLeft">
+
+<h2>Iniciar Sesión</h2>
+
+<p class="subtexto">
+  Bienvenido nuevamente a GESTUEDU
+</p>
+
+<form onsubmit="handleLogin(event)">
+
+  <input
+    type="email"
+    id="correo"
+    class="form-control"
+    placeholder="Correo"
+    required>
+
+  <input
+    type="password"
+    id="clave"
+    class="form-control"
+    placeholder="Contraseña"
+    required>
+
+  <button type="submit"
+          class="btn btn-gestu">
+      Ingresar
+  </button>
+
+</form>
+
+<div class="login-footer">
+  <p>
+    ¿No tienes cuenta?
+    <a href="forms.html">
+      Regístrate
+    </a>
+  </p>
+</div>
+
+</div>
+</div>
 
 <script>
+
 // ======================
-// 🔒 SI YA ESTÁ LOGUEADO, NO VUELVE AL LOGIN
+// SI YA ESTÁ LOGUEADO
 // ======================
 const token = localStorage.getItem("token");
 
@@ -36,9 +230,10 @@ if (token) {
 }
 
 // ======================
-// 🔑 LOGIN
+// LOGIN
 // ======================
 async function handleLogin(e) {
+
     e.preventDefault();
 
     const email = document.getElementById("correo").value.trim();
@@ -50,33 +245,43 @@ async function handleLogin(e) {
     }
 
     try {
+
         const res = await fetch("http://localhost:3000/api/auth/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ email, password })
+            body: JSON.stringify({
+                email,
+                password
+            })
         });
 
         const data = await res.json();
 
-        // 🔍 DEBUG
         console.log("RESPUESTA LOGIN:", data);
 
         if (res.ok && data.token) {
+
             localStorage.setItem("token", data.token);
 
-            // 🔥 redirección limpia
             window.location.replace("index.html");
+
         } else {
+
             alert(data.error || "Credenciales incorrectas");
+
         }
 
     } catch (error) {
+
         console.error("Error:", error);
+
         alert("No se pudo conectar al servidor");
+
     }
 }
+
 </script>
 
 </body>

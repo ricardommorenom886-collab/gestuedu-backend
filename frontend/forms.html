@@ -1,72 +1,294 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro - GESTUEDU</title>
-    <link rel="stylesheet" href="forms.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Registro - GESTUEDU</title>
+
+<!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Animate -->
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+<style>
+
+:root{
+  --azul-gestu:#0B5394;
+  --naranja-gestu:#FF9900;
+  --fondo-gestu:#F7FAEF;
+}
+
+body{
+  background:var(--fondo-gestu);
+  font-family:'Segoe UI',sans-serif;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow-x:hidden;
+  position:relative;
+  padding:30px 15px;
+}
+
+/* FONDOS DECORATIVOS */
+body::before{
+  content:"";
+  position:absolute;
+  width:450px;
+  height:450px;
+  background:rgba(11,83,148,0.08);
+  border-radius:50%;
+  top:-180px;
+  left:-120px;
+}
+
+body::after{
+  content:"";
+  position:absolute;
+  width:350px;
+  height:350px;
+  background:rgba(255,153,0,0.08);
+  border-radius:50%;
+  bottom:-150px;
+  right:-100px;
+}
+
+/* CARD */
+.register-box{
+  position:relative;
+  z-index:2;
+
+  width:100%;
+  max-width:550px;
+
+  background:white;
+  border-radius:25px;
+  overflow:hidden;
+
+  box-shadow:0 15px 35px rgba(0,0,0,0.12);
+
+  animation:fadeInUp 1s;
+}
+
+/* IMAGEN */
+.register-header img{
+  width:100%;
+  height:220px;
+  object-fit:cover;
+}
+
+/* CONTENIDO */
+.register-body{
+  padding:40px;
+  text-align:center;
+}
+
+/* LOGO */
+.logo{
+  width:95px;
+  margin-top:-80px;
+  margin-bottom:15px;
+  border-radius:20px;
+  border:5px solid white;
+  background:white;
+  box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* TITULO */
+.register-body h2{
+  color:var(--azul-gestu);
+  font-weight:700;
+  margin-bottom:10px;
+}
+
+.subtexto{
+  color:#777;
+  margin-bottom:30px;
+}
+
+/* LABELS */
+.form-label{
+  font-weight:600;
+  color:#444;
+  margin-bottom:8px;
+}
+
+/* INPUTS */
+.form-control,
+.form-select{
+  height:55px;
+  border-radius:14px;
+  border:1px solid #ddd;
+  padding-left:15px;
+  transition:0.3s;
+}
+
+.form-control:focus,
+.form-select:focus{
+  border-color:var(--azul-gestu);
+  box-shadow:0 0 0 4px rgba(11,83,148,0.1);
+}
+
+/* BOTONES */
+.btn-gestu{
+  background:var(--azul-gestu);
+  color:white;
+  border:none;
+  height:55px;
+  border-radius:14px;
+  font-weight:600;
+  transition:0.3s;
+}
+
+.btn-gestu:hover{
+  background:#083d6d;
+  transform:translateY(-2px);
+  box-shadow:0 8px 20px rgba(11,83,148,0.3);
+  color:white;
+}
+
+.btn-cancelar{
+  background:#dc3545;
+  color:white;
+  border:none;
+  height:55px;
+  border-radius:14px;
+  font-weight:600;
+  transition:0.3s;
+}
+
+.btn-cancelar:hover{
+  background:#bb2d3b;
+  transform:translateY(-2px);
+  color:white;
+}
+
+/* FOOTER */
+.footer-text{
+  text-align:center;
+  margin-top:25px;
+  color:#666;
+  font-size:14px;
+}
+
+</style>
 </head>
 
 <body>
 
-<header>
-    <img src="logo.png" alt="Logo GESTUEDU" height="40">
+<div class="register-box animate__animated animate__fadeInUp">
 
-<nav>
-    <a href="index.html" class="btn-azul">Inicio</a>
-    <a href="notas.html" class="btn-azul">Módulos</a>
-    <a href="conocenos.html" class="btn-azul">Conócenos</a>
-    <a href="contacto.html" class="btn-azul">Contacto</a>
-</nav>
-
-<div class="user">
-    <a href="login.html" class="btn-azul" style="text-decoration: none;">
-        Iniciar Sesión
-    </a>
+<!-- IMAGEN -->
+<div class="register-header">
+  <img
+    src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80"
+    alt="Registro GESTUEDU">
 </div>
 
-</header>
+<!-- CONTENIDO -->
+<div class="register-body">
 
-<section class="formulario">
-    <h2>Registro de Usuario</h2>
+<img src="img/logo.png" alt="Logo GESTUEDU" height="65" class="animate__animated animate__fadeInLeft">
+<h2>Registro de Usuario</h2>
+
+<p class="subtexto">
+  Crea tu cuenta para acceder al sistema GESTUEDU
+</p>
 
 <form onsubmit="handleRegister(event)">
 
-    <label>Nombre</label>
-    <input type="text" id="nombre" placeholder="Nombre completo" required>
+<div class="row g-3 text-start">
 
-    <label>Correo</label>
-    <input type="email" id="email" placeholder="ejemplo@correo.com" required>
+<div class="col-md-12">
+  <label class="form-label">Nombre</label>
+  <input type="text"
+         id="nombre"
+         class="form-control"
+         placeholder="Nombre completo"
+         required>
+</div>
 
-    <label>DNI</label>
-    <input type="text" id="dni" placeholder="Documento">
+<div class="col-md-12">
+  <label class="form-label">Correo</label>
+  <input type="email"
+         id="email"
+         class="form-control"
+         placeholder="ejemplo@correo.com"
+         required>
+</div>
 
-    <label>Contraseña</label>
-    <input type="password" id="password" placeholder="Mínimo 6 caracteres" required>
+<div class="col-md-6">
+  <label class="form-label">DNI</label>
+  <input type="text"
+         id="dni"
+         class="form-control"
+         placeholder="Documento">
+</div>
 
-    <label>Rol</label>
-    <select id="rol">
-        <option value="estudiante">estudiante</option>
-        <option value="profesor">profesor</option>
-        <option value="admin">admin</option>
-    </select>
+<div class="col-md-6">
+  <label class="form-label">Rol</label>
 
-    <button type="submit" class="btn-enviar">Registrar</button>
-    <button type="button" onclick="volver()" class="btn-cancelar">
-        Cancelar
-    </button>
+  <select id="rol"
+          class="form-select">
+
+      <option value="estudiante">
+        Estudiante
+      </option>
+
+      <option value="profesor">
+        Profesor
+      </option>
+
+      <option value="admin">
+        Admin
+      </option>
+
+  </select>
+</div>
+
+<div class="col-md-12">
+  <label class="form-label">Contraseña</label>
+
+  <input type="password"
+         id="password"
+         class="form-control"
+         placeholder="Mínimo 6 caracteres"
+         required>
+</div>
+
+<div class="col-md-6">
+  <button type="submit"
+          class="btn btn-gestu w-100">
+      Registrar
+  </button>
+</div>
+
+<div class="col-md-6">
+  <button type="button"
+          onclick="volver()"
+          class="btn btn-cancelar w-100">
+      Cancelar
+  </button>
+</div>
+
+</div>
 
 </form>
 
-</section>
+<div class="footer-text">
+  © 2026 GESTUEDU — Proyecto SENA ADSO
+</div>
 
-<footer>
-    © 2026 GESTUEDU — Proyecto SENA ADSO
-</footer>
+</div>
+</div>
 
 <script>
+
 async function handleRegister(e) {
+
     e.preventDefault();
 
     const nombre = document.getElementById("nombre").value.trim();
@@ -75,44 +297,66 @@ async function handleRegister(e) {
     const password = document.getElementById("password").value;
     const rol = document.getElementById("rol").value;
 
-    // 🔥 VALIDACIONES
+    // VALIDACIONES
     if (!nombre || !email || !password) {
+
         alert("Todos los campos son obligatorios");
         return;
     }
 
     if (password.length < 6) {
+
         alert("La contraseña debe tener mínimo 6 caracteres");
         return;
     }
 
     try {
+
         const res = await fetch("http://localhost:3000/api/auth/register", {
+
             method: "POST",
+
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ nombre, email, password, rol, dni })
+
+            body: JSON.stringify({
+                nombre,
+                email,
+                password,
+                rol,
+                dni
+            })
+
         });
 
         const data = await res.json();
 
         if (res.ok) {
+
             alert("Usuario registrado correctamente");
+
             window.location.href = "login.html";
+
         } else {
+
             alert(data.error || "Error en registro");
+
         }
 
     } catch (error) {
+
         console.error(error);
+
         alert("No se pudo conectar con el servidor");
+
     }
 }
 
 function volver() {
-    window.location.href = "index.html";
+    window.location.href = "login.html";
 }
+
 </script>
 
 </body>
