@@ -65,46 +65,64 @@ body::after{
   max-width:550px;
 
   background:white;
-  border-radius:25px;
+  border:none;
+  border-radius:18px;
   overflow:hidden;
 
-  box-shadow:0 15px 35px rgba(0,0,0,0.12);
+  box-shadow:0 8px 20px rgba(0,0,0,0.08);
 
-  animation:fadeInUp 1s;
+  transition:all 0.3s ease;
+
+  border-top:5px solid var(--azul-gestu);
 }
 
-/* IMAGEN */
+/* HOVER */
+.register-box:hover{
+  transform:translateY(-5px) scale(1.01);
+}
+
+/* IMAGEN SUPERIOR */
 .register-header img{
   width:100%;
-  height:220px;
+  height:180px;
   object-fit:cover;
 }
 
 /* CONTENIDO */
 .register-body{
-  padding:40px;
-  text-align:center;
+  padding:35px;
 }
 
 /* LOGO */
-.logo{
-  width:95px;
-  margin-top:-80px;
-  margin-bottom:15px;
-  border-radius:20px;
-  border:5px solid white;
+.logo-gestu{
+  height:70px;
+  width:auto;
+  display:block;
+  margin:-70px auto 20px;
+
   background:white;
-  box-shadow:0 5px 15px rgba(0,0,0,0.1);
+  padding:10px;
+  border-radius:18px;
+
+  box-shadow:0 8px 18px rgba(0,0,0,0.10);
+
+  transition:0.3s;
+}
+
+.logo-gestu:hover{
+  transform:scale(1.05);
 }
 
 /* TITULO */
 .register-body h2{
   color:var(--azul-gestu);
   font-weight:700;
+  text-align:center;
   margin-bottom:10px;
 }
 
 .subtexto{
+  text-align:center;
   color:#777;
   margin-bottom:30px;
 }
@@ -119,50 +137,66 @@ body::after{
 /* INPUTS */
 .form-control,
 .form-select{
-  height:55px;
-  border-radius:14px;
+  width:100%;
+  height:50px;
+  border-radius:12px;
   border:1px solid #ddd;
-  padding-left:15px;
+  padding:10px;
+  outline:none;
   transition:0.3s;
+}
+
+textarea.form-control{
+  height:auto;
 }
 
 .form-control:focus,
 .form-select:focus{
   border-color:var(--azul-gestu);
-  box-shadow:0 0 0 4px rgba(11,83,148,0.1);
+  box-shadow:0 0 0 3px rgba(11,83,148,0.1);
 }
 
-/* BOTONES */
+/* BOTONES GENERALES */
+button{
+  border:none;
+  padding:10px 18px;
+  border-radius:10px;
+  font-weight:600;
+  transition:0.3s;
+}
+
+button:hover{
+  transform:translateY(-2px);
+}
+
+/* BOTON GESTU */
 .btn-gestu{
   background:var(--azul-gestu);
   color:white;
-  border:none;
-  height:55px;
-  border-radius:14px;
+  height:50px;
+  border-radius:12px;
   font-weight:600;
-  transition:0.3s;
+  width:100%;
 }
 
 .btn-gestu:hover{
   background:#083d6d;
-  transform:translateY(-2px);
-  box-shadow:0 8px 20px rgba(11,83,148,0.3);
   color:white;
+  box-shadow:0 8px 20px rgba(11,83,148,0.3);
 }
 
+/* BOTON CANCELAR */
 .btn-cancelar{
   background:#dc3545;
   color:white;
-  border:none;
-  height:55px;
-  border-radius:14px;
+  height:50px;
+  border-radius:12px;
   font-weight:600;
-  transition:0.3s;
+  width:100%;
 }
 
 .btn-cancelar:hover{
   background:#bb2d3b;
-  transform:translateY(-2px);
   color:white;
 }
 
@@ -174,128 +208,171 @@ body::after{
   font-size:14px;
 }
 
+/* RESPONSIVE */
+@media(max-width:768px){
+
+  .register-body{
+    padding:25px;
+  }
+
+  .logo-gestu{
+    height:60px;
+  }
+
+}
+
 </style>
 </head>
 
 <body>
 
-<<<<<<< HEAD
 <div class="register-box animate__animated animate__fadeInUp">
 
 <!-- IMAGEN -->
 <div class="register-header">
+
   <img
     src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80"
     alt="Registro GESTUEDU">
+
 </div>
 
 <!-- CONTENIDO -->
 <div class="register-body">
-=======
-<header>
-    <img src="logo.png" alt="Logo GESTUEDU" height="80">
-</header>
->>>>>>> 574c51bbfda0072ad014402fd6a53171121c1b45
 
-<img src="img/logo.png" alt="Logo GESTUEDU" height="65" class="animate__animated animate__fadeInLeft">
-<h2>Registro de Usuario</h2>
+  <!-- LOGO -->
+  <img src="img/logo.png"
+       alt="Logo GESTUEDU"
+       class="logo-gestu animate__animated animate__fadeInDown">
 
-<p class="subtexto">
-  Crea tu cuenta para acceder al sistema GESTUEDU
-</p>
+  <h2>Registro de Usuario</h2>
 
-<form onsubmit="handleRegister(event)">
+  <p class="subtexto">
+    Crea tu cuenta para acceder al sistema GESTUEDU
+  </p>
 
-<div class="row g-3 text-start">
+  <form onsubmit="handleRegister(event)">
 
-<div class="col-md-12">
-  <label class="form-label">Nombre</label>
-  <input type="text"
-         id="nombre"
-         class="form-control"
-         placeholder="Nombre completo"
-         required>
-</div>
+    <div class="row g-3 text-start">
 
-<div class="col-md-12">
-  <label class="form-label">Correo</label>
-  <input type="email"
-         id="email"
-         class="form-control"
-         placeholder="ejemplo@correo.com"
-         required>
-</div>
+      <!-- NOMBRE -->
+      <div class="col-md-12">
 
-<div class="col-md-6">
-  <label class="form-label">DNI</label>
-  <input type="text"
-         id="dni"
-         class="form-control"
-         placeholder="Documento">
-</div>
+        <label class="form-label">
+          Nombre
+        </label>
 
-<<<<<<< HEAD
-<div class="col-md-6">
-  <label class="form-label">Rol</label>
-=======
-    <label>Rol</label>
-    <select id="rol">
-        <option value="estudiante">Estudiante</option>
-        <option value="profesor">Profesor</option>
-        <option value="admin">Admin</option>
-    </select>
->>>>>>> 574c51bbfda0072ad014402fd6a53171121c1b45
+        <input type="text"
+               id="nombre"
+               class="form-control"
+               placeholder="Nombre completo"
+               required>
 
-  <select id="rol"
-          class="form-select">
+      </div>
 
-      <option value="estudiante">
-        Estudiante
-      </option>
+      <!-- EMAIL -->
+      <div class="col-md-12">
 
-      <option value="profesor">
-        Profesor
-      </option>
+        <label class="form-label">
+          Correo
+        </label>
 
-      <option value="admin">
-        Admin
-      </option>
+        <input type="email"
+               id="email"
+               class="form-control"
+               placeholder="ejemplo@correo.com"
+               required>
 
-  </select>
-</div>
+      </div>
 
-<div class="col-md-12">
-  <label class="form-label">Contraseña</label>
+      <!-- DNI -->
+      <div class="col-md-6">
 
-  <input type="password"
-         id="password"
-         class="form-control"
-         placeholder="Mínimo 6 caracteres"
-         required>
-</div>
+        <label class="form-label">
+          DNI
+        </label>
 
-<div class="col-md-6">
-  <button type="submit"
-          class="btn btn-gestu w-100">
-      Registrar
-  </button>
-</div>
+        <input type="text"
+               id="dni"
+               class="form-control"
+               placeholder="Documento">
 
-<div class="col-md-6">
-  <button type="button"
-          onclick="volver()"
-          class="btn btn-cancelar w-100">
-      Cancelar
-  </button>
-</div>
+      </div>
 
-</div>
+      <!-- ROL -->
+      <div class="col-md-6">
 
-</form>
+        <label class="form-label">
+          Rol
+        </label>
 
-<div class="footer-text">
-  © 2026 GESTUEDU — Proyecto SENA ADSO
-</div>
+        <select id="rol"
+                class="form-select">
+
+          <option value="estudiante">
+            Estudiante
+          </option>
+
+          <option value="profesor">
+            Profesor
+          </option>
+
+          <option value="admin">
+            Admin
+          </option>
+
+        </select>
+
+      </div>
+
+      <!-- PASSWORD -->
+      <div class="col-md-12">
+
+        <label class="form-label">
+          Contraseña
+        </label>
+
+        <input type="password"
+               id="password"
+               class="form-control"
+               placeholder="Mínimo 6 caracteres"
+               required>
+
+      </div>
+
+      <!-- BOTON -->
+      <div class="col-md-6">
+
+        <button type="submit"
+                class="btn btn-gestu w-100">
+
+          Registrar
+
+        </button>
+
+      </div>
+
+      <!-- CANCELAR -->
+      <div class="col-md-6">
+
+        <button type="button"
+                onclick="volver()"
+                class="btn btn-cancelar w-100">
+
+          Cancelar
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </form>
+
+  <!-- FOOTER -->
+  <div class="footer-text">
+    © 2026 GESTUEDU — Proyecto SENA ADSO
+  </div>
 
 </div>
 </div>
