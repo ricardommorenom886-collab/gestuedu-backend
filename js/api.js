@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000/api";
+const API_URL = "https://gestuedu-backend.vercel.app/api";
 
 // 🔐 obtener token
 function getToken() {
